@@ -21,7 +21,10 @@ peertube_base_path: "{{ peertube_playbook_base_path }}/peertube"
 peertube_config_dir_path: "{{ peertube_base_path }}/config"
 peertube_data_dir_path: "{{ peertube_base_path }}/data"
 
-peertube_systemd_required_services_list: ['docker.service']
+peertube_systemd_required_services_list: "{{ peertube_systemd_required_services_list_default + peertube_systemd_required_services_list_auto + peertube_systemd_required_services_list_custom }}"
+peertube_systemd_required_services_list_default: ['docker.service']
+peertube_systemd_required_services_list_auto: []
+peertube_systemd_required_services_list_custom: []
 
 peertube_config_database_hostname: ''
 peertube_config_database_port: 5432
@@ -111,7 +114,9 @@ peertube_container_network: "{{ peertube_identifier }}"
 # A list of additional container networks that the container would be connected to.
 # The playbook does not create these networks, so make sure they already exist.
 # Use this to expose the container to another reverse proxy, which runs in a different container network.
-peertube_container_additional_networks: []
+peertube_container_additional_networks: "{{ peertube_container_additional_networks_auto + peertube_container_additional_networks_custom }}"
+peertube_container_additional_networks_auto: []
+peertube_container_additional_networks_custom: []
 
 # Controls whether the container exposes its HTTP port (tcp/9000 in the container).
 #
