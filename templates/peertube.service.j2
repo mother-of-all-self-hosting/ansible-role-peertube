@@ -31,6 +31,7 @@ ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
 			--label-file={{ peertube_base_path }}/labels \
 			--mount type=bind,src={{ peertube_config_dir_path }},dst=/config \
 			--mount type=bind,src={{ peertube_data_dir_path }},dst=/data \
+			--tmpfs=/tmp:rw,noexec,nosuid,size=512m \
 			{% for arg in peertube_container_extra_arguments %}
 			{{ arg }} \
 			{% endfor %}
