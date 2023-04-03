@@ -8,7 +8,7 @@ traefik.docker.network={{ peertube_container_labels_traefik_docker_network }}
 {% set middlewares = [] %}
 
 {% if peertube_container_labels_traefik_path_prefix != '/' %}
-traefik.http.middlewares.{{ peertube_identifier }}-slashless-redirect.redirectregex.regex=({{ peertube_container_labels_traefik_path_prefix | quote }})$
+traefik.http.middlewares.{{ peertube_identifier }}-slashless-redirect.redirectregex.regex=^({{ peertube_container_labels_traefik_path_prefix | quote }})$
 traefik.http.middlewares.{{ peertube_identifier }}-slashless-redirect.redirectregex.replacement=${1}/
 {% set middlewares = middlewares + [peertube_identifier + '-slashless-redirect'] %}
 {% endif %}
