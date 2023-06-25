@@ -20,14 +20,6 @@
     - peertube_config_redis_hostname
     - peertube_config_root_user_initial_password
 
-# There doesn't seem to be an environment variable for customizing it.
-# There's only `PEERTUBE_DB_SUFFIX` for adding a suffix.
-- name: Fail if required PeerTube database name is not peertube
-  ansible.builtin.fail:
-    msg: >-
-      The database name (peertube_config_database_name) is not currectly configurable and must be set to 'peertube'.
-  when: "peertube_config_database_name != 'peertube'"
-
 - name: Fail if required PeerTube Object Storage settings not defined
   ansible.builtin.fail:
     msg: >-
