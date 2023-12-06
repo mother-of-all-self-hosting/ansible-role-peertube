@@ -1,5 +1,7 @@
 ---
 
+# Project source code URL: https://github.com/Chocobozzz/PeerTube
+
 peertube_enabled: true
 
 peertube_identifier: peertube-peertube
