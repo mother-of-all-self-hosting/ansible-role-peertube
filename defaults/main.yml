@@ -6,7 +6,7 @@ peertube_enabled: true
 
 peertube_identifier: peertube-peertube
 
-peertube_version: v6.0.1
+peertube_version: v6.0.2
 
 peertube_uid: ''
 peertube_gid: ''
