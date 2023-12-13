@@ -1,5 +1,16 @@
 ---
 
+- name: (Deprecation) Catch and report renamed PeerTube settings
+  ansible.builtin.fail:
+    msg: >-
+      Your configuration contains a variable, which now has a different name.
+      Please change your configuration to rename the variable (`{{ item.old }}` -> `{{ item.new }}`).
+  when: "item.old in vars"
+  with_items:
+    - {'old': 'peertube_config_object_storage_videos_bucket_name', 'new': 'peertube_config_object_storage_web_videos_bucket_name'}
+    - {'old': 'peertube_config_object_storage_videos_prefix', 'new': 'peertube_config_object_storage_web_videos_prefix'}
+    - {'old': 'peertube_config_object_storage_videos_base_url', 'new': 'peertube_config_object_storage_web_videos_base_url'}
+
 - name: Fail if required PeerTube settings not defined
   ansible.builtin.fail:
     msg: >-
@@ -32,18 +43,6 @@
     - peertube_config_object_storage_credentials_secret_access_key
     - peertube_config_object_storage_streaming_playlists_bucket_name
     - peertube_config_object_storage_videos_bucket_name
-
-
-- name: (Deprecation) Catch and report renamed PeerTube settings
-  ansible.builtin.fail:
-    msg: >-
-      Your configuration contains a variable, which now has a different name.
-      Please change your configuration to rename the variable (`{{ item.old }}` -> `{{ item.new }}`).
-  when: "item.old in vars"
-  with_items:
-    - {'old': 'peertube_config_object_storage_videos_bucket_name', 'new': 'peertube_config_object_storage_web_videos_bucket_name'}
-    - {'old': 'peertube_config_object_storage_videos_prefix', 'new': 'peertube_config_object_storage_web_videos_prefix'}
-    - {'old': 'peertube_config_object_storage_videos_base_url', 'new': 'peertube_config_object_storage_web_videos_base_url'}
 
 - when: peertube_container_labels_traefik_enabled | bool
   block:
