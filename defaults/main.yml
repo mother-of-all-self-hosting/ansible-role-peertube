@@ -89,13 +89,13 @@ peertube_config_object_storage_streaming_playlists_prefix: ''
 # Controls the PEERTUBE_OBJECT_STORAGE_STREAMING_PLAYLISTS_BASE_URL environment variable
 peertube_config_object_storage_streaming_playlists_base_url: ''
 
-# Controls the PEERTUBE_OBJECT_STORAGE_VIDEOS_BUCKET_NAME environment variable.
+# Controls the PEERTUBE_OBJECT_STORAGE_WEB_VIDEOS_BUCKET_NAME environment variable.
 # Example: webtorrent-videos
-peertube_config_object_storage_videos_bucket_name: ''
-# Controls the PEERTUBE_OBJECT_STORAGE_VIDEOS_PREFIX environment variable
-peertube_config_object_storage_videos_prefix: ''
-# Controls the PEERTUBE_OBJECT_STORAGE_VIDEOS_BASE_URL environment variable
-peertube_config_object_storage_videos_base_url: ''
+peertube_config_object_storage_web_videos_bucket_name: ''
+# Controls the PEERTUBE_OBJECT_STORAGE_WEB_VIDEOS_PREFIX environment variable
+peertube_config_object_storage_web_videos_prefix: ''
+# Controls the PEERTUBE_OBJECT_STORAGE_WEB_VIDEOS_BASE_URL environment variable
+peertube_config_object_storage_web_videos_base_url: ''
 
 # Controls the PEERTUBE_OBJECT_STORAGE_UPLOAD_ACL_PUBLIC environment variable
 peertube_config_object_storage_upload_acl_public: public-read
