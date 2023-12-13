@@ -42,7 +42,7 @@
     - peertube_config_object_storage_credentials_access_key_id
     - peertube_config_object_storage_credentials_secret_access_key
     - peertube_config_object_storage_streaming_playlists_bucket_name
-    - peertube_config_object_storage_videos_bucket_name
+    - peertube_config_object_storage_web_videos_bucket_name
 
 - when: peertube_container_labels_traefik_enabled | bool
   block:
