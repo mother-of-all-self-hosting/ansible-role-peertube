@@ -35,6 +35,14 @@ peertube_config_database_name: peertube
 peertube_config_database_username: ''
 peertube_config_database_password: ''
 
+peertube_config_smtp_hostname: ''
+peertube_config_smtp_port: 587
+peertube_config_smtp_username: ''
+peertube_config_smtp_password: ''
+peertube_config_smtp_tls: false
+peertube_config_smtp_disable_starttls: true
+peertube_config_smtp_from: ''
+
 # Controls the PEERTUBE_TRUST_PROXY environment variable, which specifies the trusted proxies.
 #
 # Define your own in `peertube_trusted_proxies_values_custom`.
