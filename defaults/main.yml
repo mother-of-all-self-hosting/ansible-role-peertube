@@ -254,5 +254,19 @@ peertube_framing_prevention_enabled: false
 # See `peertube_config_trust_proxy`.
 # Your own custom changes should be added to `peertube_trusted_proxies_values_custom`.
 peertube_trusted_proxies_values: "{{ peertube_trusted_proxies_values_auto + peertube_trusted_proxies_values_custom }}"
-peertube_trusted_proxies_values_auto: []
+
+peertube_trusted_proxies_values_auto: |-
+  {{
+    (peertube_trusted_proxies_values_auto_trust_container_networks_list if peertube_trusted_proxies_values_auto_trust_container_networks_enabled else [])
+  }}
+
+# Controls if Docker networks will be trusted when it comes to reverse-proxying (see `peertube_config_trust_proxy`).
+# If Traefik labels are enabled, we wish to trust Traefik's network.
+# Since this network is created elsewhere (and possibly at a different time), it's difficult to whitelist it correctly.
+# Instead, we whitelist the whole default Docker network pool. It's not ideal, but it's not too bad either.
+# The ranges we use roughly match those defined here:
+# https://github.com/moby/libnetwork/blob/3797618f9a38372e8107d8c06f6ae199e1133ae8/ipamutils/utils.go#L18-L20
+peertube_trusted_proxies_values_auto_trust_container_networks_enabled: "{{ peertube_container_labels_traefik_enabled }}"
+peertube_trusted_proxies_values_auto_trust_container_networks_list: ['172.16.0.0/12', '192.168.0.0/16']
+
 peertube_trusted_proxies_values_custom: []
