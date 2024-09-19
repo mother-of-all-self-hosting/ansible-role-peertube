@@ -25,7 +25,7 @@ peertube_config_dir_path: "{{ peertube_base_path }}/config"
 peertube_data_dir_path: "{{ peertube_base_path }}/data"
 
 peertube_systemd_required_services_list: "{{ peertube_systemd_required_services_list_default + peertube_systemd_required_services_list_auto + peertube_systemd_required_services_list_custom }}"
-peertube_systemd_required_services_list_default: ['docker.service']
+peertube_systemd_required_services_list_default: "{{ [devture_systemd_docker_base_docker_service_name] if devture_systemd_docker_base_docker_service_name else [] }}"
 peertube_systemd_required_services_list_auto: []
 peertube_systemd_required_services_list_custom: []
 
