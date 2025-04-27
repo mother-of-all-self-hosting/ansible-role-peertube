@@ -171,7 +171,6 @@ peertube_container_labels_traefik_additional_response_headers_auto: |
   {{
     {}
     | combine ({'X-XSS-Protection': peertube_http_header_xss_protection} if peertube_http_header_xss_protection else {})
-    | combine ({'X-Frame-Options': peertube_http_header_frame_options} if peertube_http_header_frame_options else {})
     | combine ({'X-Content-Type-Options': peertube_http_header_content_type_options} if peertube_http_header_content_type_options else {})
     | combine ({'Content-Security-Policy': peertube_http_header_content_security_policy} if peertube_http_header_content_security_policy else {})
     | combine ({'Permission-Policy': peertube_http_header_content_permission_policy} if peertube_http_header_content_permission_policy else {})
@@ -206,10 +205,6 @@ peertube_container_additional_environment_variables: ''
 # - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
 # - https://portswigger.net/web-security/cross-site-scripting/reflected
 peertube_http_header_xss_protection: "1; mode=block"
-
-# Specifies the value of the `X-Frame-Options` header which controls whether framing can happen.
-# See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
-peertube_http_header_frame_options: "{{ 'SAMEORIGIN' if peertube_framing_prevention_enabled else '' }}"
 
 # Specifies the value of the `X-Content-Type-Options` header.
 # See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
