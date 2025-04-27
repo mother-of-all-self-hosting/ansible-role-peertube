@@ -45,7 +45,7 @@ traefik.http.routers.{{ peertube_identifier }}.tls={{ peertube_container_labels_
 traefik.http.routers.{{ peertube_identifier }}.tls.certResolver={{ peertube_container_labels_traefik_tls_certResolver }}
 {% endif %}
 
-traefik.http.services.{{ peertube_identifier }}.loadbalancer.server.port=9000
+traefik.http.services.{{ peertube_identifier }}.loadbalancer.server.port={{ peertube_container_http_port }}
 {% endif %}
 
 {{ peertube_container_labels_additional_labels }}
