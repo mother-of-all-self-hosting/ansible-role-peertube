@@ -60,6 +60,7 @@ ExecStart={{ devture_systemd_docker_base_host_command_docker }} start --attach {
 
 ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} stop -t {{ devture_systemd_docker_base_container_stop_grace_time_seconds }} {{ peertube_identifier }} 2>/dev/null'
 ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} rm {{ peertube_identifier }} 2>/dev/null'
+
 Restart=always
 RestartSec=30
 SyslogIdentifier={{ peertube_identifier }}
