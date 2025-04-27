@@ -1,5 +1,6 @@
 # SPDX-FileCopyrightText: 2023 - 2025 Slavi Pantaleev
 # SPDX-FileCopyrightText: 2024 Nikita Chernyi
+# SPDX-FileCopyrightText: 2025 Suguru Hirahara
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -48,6 +49,12 @@ peertube_container_rtmp_host_bind_port: ''
 
 # The base container network. It will be auto-created by this role if it doesn't exist already.
 peertube_container_network: "{{ peertube_identifier }}"
+
+# The HTTP port number in the container
+peertube_container_http_port: 9000
+
+# The RTMP port number in the container
+peertube_container_rtmp_port: 1935
 
 # A list of additional container networks that the container would be connected to.
 # The playbook does not create these networks, so make sure they already exist.

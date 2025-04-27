@@ -1,6 +1,7 @@
 {#
 SPDX-FileCopyrightText: 2023 - 2025 Slavi Pantaleev
 SPDX-FileCopyrightText: 2024 Nikita Chernyi
+SPDX-FileCopyrightText: 2025 Suguru Hirahara
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 #}
@@ -30,12 +31,12 @@ ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
       --user={{ peertube_uid }}:{{ peertube_gid }} \
       --cap-drop=ALL \
       --read-only \
-      {% if peertube_container_http_host_bind_port != '' %}
-      -p {{ peertube_container_http_host_bind_port }}:9000 \
+      {% if peertube_container_http_host_bind_port %}
+      -p {{ peertube_container_http_host_bind_port }}:{{ peertube_container_http_port }} \
       {% endif %}
-      {% if peertube_container_rtmp_host_bind_port != '' %}
-      -p {{ peertube_container_rtmp_host_bind_port }}:1935 \
-      -p {{ peertube_container_rtmp_host_bind_port }}:1935/udp \
+      {% if peertube_container_rtmp_host_bind_port %}
+      -p {{ peertube_container_rtmp_host_bind_port }}:{{ peertube_container_rtmp_port }} \
+      -p {{ peertube_container_rtmp_host_bind_port }}:{{ peertube_container_rtmp_port }}/udp \
       {% endif %}
       --env-file={{ peertube_base_path }}/env \
       --label-file={{ peertube_base_path }}/labels \
