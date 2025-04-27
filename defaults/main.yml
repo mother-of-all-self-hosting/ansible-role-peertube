@@ -9,10 +9,12 @@
 peertube_enabled: true
 
 peertube_identifier: peertube-peertube
+peertube_base_path: "{{ peertube_playbook_base_path }}/peertube"
+peertube_config_dir_path: "{{ peertube_base_path }}/config"
+peertube_data_dir_path: "{{ peertube_base_path }}/data"
 
 # renovate: datasource=docker depName=chocobozzz/peertube versioning=semver
 peertube_version: v7.1.1
-peertube_distro_variant: bookworm
 
 peertube_uid: ''
 peertube_gid: ''
@@ -25,119 +27,14 @@ peertube_hostname: ''
 # At the moment, this can only be set to `/`. It doesn't seem like PeerTube supports being hosted at a subpath.
 peertube_path_prefix: /
 
-peertube_base_path: "{{ peertube_playbook_base_path }}/peertube"
-peertube_config_dir_path: "{{ peertube_base_path }}/config"
-peertube_data_dir_path: "{{ peertube_base_path }}/data"
-
-peertube_systemd_required_services_list: "{{ peertube_systemd_required_services_list_default + peertube_systemd_required_services_list_auto + peertube_systemd_required_services_list_custom }}"
-peertube_systemd_required_services_list_default: "{{ [devture_systemd_docker_base_docker_service_name] if devture_systemd_docker_base_docker_service_name else [] }}"
-peertube_systemd_required_services_list_auto: []
-peertube_systemd_required_services_list_custom: []
-
-peertube_config_database_hostname: ''
-peertube_config_database_port: 5432
-peertube_config_database_name: peertube
-peertube_config_database_username: ''
-peertube_config_database_password: ''
-
-peertube_config_smtp_hostname: ''
-peertube_config_smtp_port: 587
-peertube_config_smtp_username: ''
-peertube_config_smtp_password: ''
-peertube_config_smtp_tls: false
-peertube_config_smtp_disable_starttls: true
-peertube_config_smtp_from: ''
-
-# Controls the PEERTUBE_TRUST_PROXY environment variable, which specifies the trusted proxies.
-#
-# Define your own in `peertube_trusted_proxies_values_custom`.
-peertube_config_trust_proxy: |-
-  {{
-    (
-      ['127.0.0.1']
-      +
-      ['loopback']
-      +
-      peertube_trusted_proxies_values
-    )
-  }}
-
-# Controls the PEERTUBE_SECRET environment variable.
-# Generate a strong one with `pwgen -s 64 1`
-peertube_config_secret: ''
-
-# Controls the PEERTUBE_ADMIN_EMAIL environment variable
-peertube_config_admin_email: ''
-
-# Controls the PEERTUBE_REDIS_HOSTNAME environment variable
-peertube_config_redis_hostname: ''
-
-# Control the PEERTUBE_REDIS_DB environment variable
-peertube_config_redis_db: 0
-
-# Controls the PT_INITIAL_ROOT_PASSWORD environment variable, which configures the initial password of the automatically created `root` user.
-# See: https://github.com/Chocobozzz/PeerTube/blob/develop/support/doc/production.md#technologist-administrator
-#
-# While PeerTube allows this to be left empty and causes it to auto-generate the password in such cases (and spew it in the log),
-# this Ansible role requires that a password is always explicitly defined.
-peertube_config_root_user_initial_password: ''
-
-# Controls the PEERTUBE_OBJECT_STORAGE_ENABLED environment variable for enabling Object Storage.
-# See: https://docs.joinpeertube.org/admin-remote-storage
-peertube_config_object_storage_enabled: false
-# Controls the PEERTUBE_OBJECT_STORAGE_ENDPOINT environment variable.
-# Example: s3.us-east-1.amazonaws.com
-peertube_config_object_storage_endpoint: ''
-# Controls the PEERTUBE_OBJECT_STORAGE_REGION environment variable.
-# Example: us-east-1
-peertube_config_object_storage_region: ''
-
-# Controls the PEERTUBE_OBJECT_STORAGE_CREDENTIALS_ACCESS_KEY_ID environment variable.
-peertube_config_object_storage_credentials_access_key_id: ''
-# Controls the PEERTUBE_OBJECT_STORAGE_CREDENTIALS_SECRET_ACCESS_KEY environment variable.
-peertube_config_object_storage_credentials_secret_access_key: ''
-
-# Controls the PEERTUBE_OBJECT_STORAGE_STREAMING_PLAYLISTS_BUCKET_NAME environment variable.
-# Example: hls-videos
-peertube_config_object_storage_streaming_playlists_bucket_name: ''
-# Controls the PEERTUBE_OBJECT_STORAGE_STREAMING_PLAYLISTS_PREFIX environment variable
-peertube_config_object_storage_streaming_playlists_prefix: ''
-# Controls the PEERTUBE_OBJECT_STORAGE_STREAMING_PLAYLISTS_BASE_URL environment variable
-peertube_config_object_storage_streaming_playlists_base_url: ''
-
-# Controls the PEERTUBE_OBJECT_STORAGE_WEB_VIDEOS_BUCKET_NAME environment variable.
-# Example: webtorrent-videos
-peertube_config_object_storage_web_videos_bucket_name: ''
-# Controls the PEERTUBE_OBJECT_STORAGE_WEB_VIDEOS_PREFIX environment variable
-peertube_config_object_storage_web_videos_prefix: ''
-# Controls the PEERTUBE_OBJECT_STORAGE_WEB_VIDEOS_BASE_URL environment variable
-peertube_config_object_storage_web_videos_base_url: ''
-
-# Controls the PEERTUBE_OBJECT_STORAGE_UPLOAD_ACL_PUBLIC environment variable
-peertube_config_object_storage_upload_acl_public: public-read
-# Controls the PEERTUBE_OBJECT_STORAGE_UPLOAD_ACL_PRIVATE environment variable
-peertube_config_object_storage_upload_acl_private: private
-
-# Controls the PEERTUBE_LOG_LEVEL environment variable.
-# Valid values: debug, info, warn, error
-peertube_config_log_level: info
-
 peertube_container_image: "{{ peertube_container_image_registry_prefix }}chocobozzz/peertube:{{ peertube_container_image_tag }}"
+peertube_container_image_tag: "{{ peertube_version }}-{{ peertube_distro_variant }}"
 peertube_container_image_registry_prefix: "{{ peertube_container_image_registry_prefix_upstream }}"
 peertube_container_image_registry_prefix_upstream: "{{ peertube_container_image_registry_prefix_upstream_default }}"
 peertube_container_image_registry_prefix_upstream_default: docker.io/
-peertube_container_image_tag: "{{ peertube_version }}-{{ peertube_distro_variant }}"
 peertube_container_image_force_pull: "{{ peertube_container_image.endswith(':latest') }}"
 
-# The base container network. It will be auto-created by this role if it doesn't exist already.
-peertube_container_network: "{{ peertube_identifier }}"
-
-# A list of additional container networks that the container would be connected to.
-# The playbook does not create these networks, so make sure they already exist.
-# Use this to expose the container to another reverse proxy, which runs in a different container network.
-peertube_container_additional_networks: "{{ peertube_container_additional_networks_auto + peertube_container_additional_networks_custom }}"
-peertube_container_additional_networks_auto: []
-peertube_container_additional_networks_custom: []
+peertube_distro_variant: bookworm
 
 # Controls whether the container exposes its HTTP port (tcp/9000 in the container).
 #
@@ -148,6 +45,16 @@ peertube_container_http_host_bind_port: ''
 #
 # Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:1935"), or empty string to not expose.
 peertube_container_rtmp_host_bind_port: ''
+
+# The base container network. It will be auto-created by this role if it doesn't exist already.
+peertube_container_network: "{{ peertube_identifier }}"
+
+# A list of additional container networks that the container would be connected to.
+# The playbook does not create these networks, so make sure they already exist.
+# Use this to expose the container to another reverse proxy, which runs in a different container network.
+peertube_container_additional_networks: "{{ peertube_container_additional_networks_auto + peertube_container_additional_networks_custom }}"
+peertube_container_additional_networks_auto: []
+peertube_container_additional_networks_custom: []
 
 # peertube_container_labels_traefik_enabled controls whether labels to assist a Traefik reverse-proxy will be attached to the container.
 # See `roles/peertube/peertube/templates/labels.j2` for details.
@@ -252,6 +159,12 @@ peertube_hsts_preload_enabled: false
 # Controls whether HTTP headers should be set which would prevent framing (embedding).
 peertube_framing_prevention_enabled: false
 
+# List of systemd services that the PeerTube systemd service depends on
+peertube_systemd_required_services_list: "{{ peertube_systemd_required_services_list_default + peertube_systemd_required_services_list_auto + peertube_systemd_required_services_list_custom }}"
+peertube_systemd_required_services_list_default: "{{ [devture_systemd_docker_base_docker_service_name] if devture_systemd_docker_base_docker_service_name else [] }}"
+peertube_systemd_required_services_list_auto: []
+peertube_systemd_required_services_list_custom: []
+
 # Controls which values to register in PEERTUBE_TRUST_PROXY
 # See `peertube_config_trust_proxy`.
 # Your own custom changes should be added to `peertube_trusted_proxies_values_custom`.
@@ -275,3 +188,91 @@ peertube_trusted_proxies_values_custom: []
 
 peertube_start_wait_time: 15
 peertube_migration_wait_time: 1800
+
+peertube_config_database_hostname: ''
+peertube_config_database_port: 5432
+peertube_config_database_name: peertube
+peertube_config_database_username: ''
+peertube_config_database_password: ''
+
+peertube_config_smtp_hostname: ''
+peertube_config_smtp_port: 587
+peertube_config_smtp_username: ''
+peertube_config_smtp_password: ''
+peertube_config_smtp_tls: false
+peertube_config_smtp_disable_starttls: true
+peertube_config_smtp_from: ''
+
+# Controls the PEERTUBE_TRUST_PROXY environment variable, which specifies the trusted proxies.
+#
+# Define your own in `peertube_trusted_proxies_values_custom`.
+peertube_config_trust_proxy: |-
+  {{
+    (
+      ['127.0.0.1']
+      +
+      ['loopback']
+      +
+      peertube_trusted_proxies_values
+    )
+  }}
+
+# Controls the PEERTUBE_SECRET environment variable.
+# Generate a strong one with `pwgen -s 64 1`
+peertube_config_secret: ''
+
+# Controls the PEERTUBE_ADMIN_EMAIL environment variable
+peertube_config_admin_email: ''
+
+# Controls the PEERTUBE_REDIS_HOSTNAME environment variable
+peertube_config_redis_hostname: ''
+
+# Control the PEERTUBE_REDIS_DB environment variable
+peertube_config_redis_db: 0
+
+# Controls the PT_INITIAL_ROOT_PASSWORD environment variable, which configures the initial password of the automatically created `root` user.
+# See: https://github.com/Chocobozzz/PeerTube/blob/develop/support/doc/production.md#technologist-administrator
+#
+# While PeerTube allows this to be left empty and causes it to auto-generate the password in such cases (and spew it in the log),
+# this Ansible role requires that a password is always explicitly defined.
+peertube_config_root_user_initial_password: ''
+
+# Controls the PEERTUBE_OBJECT_STORAGE_ENABLED environment variable for enabling Object Storage.
+# See: https://docs.joinpeertube.org/admin-remote-storage
+peertube_config_object_storage_enabled: false
+# Controls the PEERTUBE_OBJECT_STORAGE_ENDPOINT environment variable.
+# Example: s3.us-east-1.amazonaws.com
+peertube_config_object_storage_endpoint: ''
+# Controls the PEERTUBE_OBJECT_STORAGE_REGION environment variable.
+# Example: us-east-1
+peertube_config_object_storage_region: ''
+
+# Controls the PEERTUBE_OBJECT_STORAGE_CREDENTIALS_ACCESS_KEY_ID environment variable.
+peertube_config_object_storage_credentials_access_key_id: ''
+# Controls the PEERTUBE_OBJECT_STORAGE_CREDENTIALS_SECRET_ACCESS_KEY environment variable.
+peertube_config_object_storage_credentials_secret_access_key: ''
+
+# Controls the PEERTUBE_OBJECT_STORAGE_STREAMING_PLAYLISTS_BUCKET_NAME environment variable.
+# Example: hls-videos
+peertube_config_object_storage_streaming_playlists_bucket_name: ''
+# Controls the PEERTUBE_OBJECT_STORAGE_STREAMING_PLAYLISTS_PREFIX environment variable
+peertube_config_object_storage_streaming_playlists_prefix: ''
+# Controls the PEERTUBE_OBJECT_STORAGE_STREAMING_PLAYLISTS_BASE_URL environment variable
+peertube_config_object_storage_streaming_playlists_base_url: ''
+
+# Controls the PEERTUBE_OBJECT_STORAGE_WEB_VIDEOS_BUCKET_NAME environment variable.
+# Example: webtorrent-videos
+peertube_config_object_storage_web_videos_bucket_name: ''
+# Controls the PEERTUBE_OBJECT_STORAGE_WEB_VIDEOS_PREFIX environment variable
+peertube_config_object_storage_web_videos_prefix: ''
+# Controls the PEERTUBE_OBJECT_STORAGE_WEB_VIDEOS_BASE_URL environment variable
+peertube_config_object_storage_web_videos_base_url: ''
+
+# Controls the PEERTUBE_OBJECT_STORAGE_UPLOAD_ACL_PUBLIC environment variable
+peertube_config_object_storage_upload_acl_public: public-read
+# Controls the PEERTUBE_OBJECT_STORAGE_UPLOAD_ACL_PRIVATE environment variable
+peertube_config_object_storage_upload_acl_private: private
+
+# Controls the PEERTUBE_LOG_LEVEL environment variable.
+# Valid values: debug, info, warn, error
+peertube_config_log_level: info
