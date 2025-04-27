@@ -165,6 +165,9 @@ peertube_systemd_required_services_list_default: "{{ [devture_systemd_docker_bas
 peertube_systemd_required_services_list_auto: []
 peertube_systemd_required_services_list_custom: []
 
+# List of systemd services that the PeerTube systemd service wants
+peertube_systemd_wanted_services_list: []
+
 # Controls which values to register in PEERTUBE_TRUST_PROXY
 # See `peertube_config_trust_proxy`.
 # Your own custom changes should be added to `peertube_trusted_proxies_values_custom`.
