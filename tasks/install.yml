@@ -18,7 +18,7 @@
     - "{{ peertube_config_dir_path }}"
     - "{{ peertube_data_dir_path }}"
 
-- name: Ensure PeerTube support files created
+- name: Ensure PeerTube support files installed
   ansible.builtin.template:
     src: "{{ role_path }}/templates/{{ item }}.j2"
     dest: "{{ peertube_base_path }}/{{ item }}"
@@ -43,7 +43,7 @@
     force_source: "{{ peertube_container_image_force_pull if ansible_version.major > 2 or ansible_version.minor >= 8 else omit }}"
     force: "{{ omit if ansible_version.major > 2 or ansible_version.minor >= 8 else peertube_container_image_force_pull }}"
 
-- name: Ensure PeerTube systemd service installed
+- name: Ensure PeerTube systemd service is present
   ansible.builtin.template:
     src: "{{ role_path }}/templates/peertube.service.j2"
     dest: "{{ devture_systemd_docker_base_systemd_path }}/{{ peertube_identifier }}.service"
