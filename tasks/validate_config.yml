@@ -39,7 +39,7 @@
   ansible.builtin.fail:
     msg: >-
       You need to define a required configuration setting (`{{ item }}`).
-  when: "peertube_config_object_storage_enabled | bool and vars[item] == ''"
+  when: "peertube_config_object_storage_enabled | bool and lookup('vars', item, default='') | string | length == 0"
   with_items:
     - peertube_config_object_storage_endpoint
     - peertube_config_object_storage_region
