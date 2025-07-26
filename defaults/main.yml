@@ -111,13 +111,13 @@ peertube_container_labels_additional_labels: ''
 # A list of extra arguments to pass to the container
 peertube_container_extra_arguments: []
 
-# peertube_container_additional_environment_variables contains a multiline string with additional environment variables to pass to the container.
+# peertube_environment_variables_additional_variables contains a multiline string with additional environment variables to pass to the container.
 #
 # Example:
-# peertube_container_additional_environment_variables: |
+# peertube_environment_variables_additional_variables: |
 #   VAR=1
 #   ANOTHER=value
-peertube_container_additional_environment_variables: ''
+peertube_environment_variables_additional_variables: ''
 
 # Specifies the value of the `X-XSS-Protection` header
 # Stops pages from loading when they detect reflected cross-site scripting (XSS) attacks.
