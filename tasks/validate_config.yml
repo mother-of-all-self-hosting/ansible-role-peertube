@@ -13,6 +13,8 @@
     - { "old": "peertube_config_object_storage_videos_bucket_name", "new": "peertube_config_object_storage_web_videos_bucket_name" }
     - { "old": "peertube_config_object_storage_videos_prefix", "new": "peertube_config_object_storage_web_videos_prefix" }
     - { "old": "peertube_config_object_storage_videos_base_url", "new": "peertube_config_object_storage_web_videos_base_url" }
+    - { "old": "peertube_config_redis_hostname", "new": "peertube_redis_hostname" }
+    - { "old": "peertube_config_redis_db", "new": "peertube_redis_db" }
     - { "old": "peertube_container_additional_environment_variables", "new": "peertube_environment_variables_additional_variables" }
 
 - name: Fail if required PeerTube settings not defined
@@ -32,7 +34,7 @@
     - peertube_config_database_password
     - peertube_config_secret
     - peertube_config_admin_email
-    - peertube_config_redis_hostname
+    - peertube_redis_hostname
     - peertube_config_root_user_initial_password
 
 - name: Fail if required PeerTube Object Storage settings not defined

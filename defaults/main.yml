@@ -250,10 +250,10 @@ peertube_config_secret: ''
 peertube_config_admin_email: ''
 
 # Controls the PEERTUBE_REDIS_HOSTNAME environment variable
-peertube_config_redis_hostname: ''
+peertube_redis_hostname: ''
 
 # Control the PEERTUBE_REDIS_DB environment variable
-peertube_config_redis_db: 0
+peertube_redis_db: 0
 
 # Controls the PT_INITIAL_ROOT_PASSWORD environment variable, which configures the initial password of the automatically created `root` user.
 # See: https://github.com/Chocobozzz/PeerTube/blob/develop/support/doc/production.md#technologist-administrator
