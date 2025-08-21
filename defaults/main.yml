@@ -219,6 +219,7 @@ peertube_database_port: 5432
 peertube_database_name: peertube
 peertube_database_username: ''
 peertube_database_password: ''
+peertube_database_sslmode: false
 
 peertube_config_smtp_hostname: ''
 peertube_config_smtp_port: 587
