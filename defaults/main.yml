@@ -188,7 +188,10 @@ peertube_systemd_required_services_list_auto: []
 peertube_systemd_required_services_list_custom: []
 
 # List of systemd services that the PeerTube systemd service wants
-peertube_systemd_wanted_services_list: []
+peertube_systemd_wanted_services_list: "{{ peertube_systemd_wanted_services_list_default + peertube_systemd_wanted_services_list_auto + peertube_systemd_wanted_services_list_custom }}"
+peertube_systemd_wanted_services_list_default: []
+peertube_systemd_wanted_services_list_auto: []
+peertube_systemd_wanted_services_list_custom: []
 
 # Controls which values to register in PEERTUBE_TRUST_PROXY
 # See `peertube_config_trust_proxy`.
