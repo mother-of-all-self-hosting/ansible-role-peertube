@@ -220,7 +220,7 @@ peertube_migration_wait_time: 1800
 peertube_database_hostname: ''
 peertube_database_port: 5432
 peertube_database_name: peertube
-peertube_database_username: ''
+peertube_database_username: peertube
 peertube_database_password: ''
 peertube_database_sslmode: false
 

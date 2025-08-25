@@ -36,7 +36,6 @@
     - peertube_hostname
     - peertube_path_prefix
     - peertube_database_hostname
-    - peertube_database_username
     - peertube_database_password
     - peertube_config_secret
     - peertube_config_admin_email
