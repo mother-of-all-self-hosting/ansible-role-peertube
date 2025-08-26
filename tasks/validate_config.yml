@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2023 Julian-Samuel Gebühr
 # SPDX-FileCopyrightText: 2023 Slavi Pantaleev
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
@@ -54,6 +55,14 @@
     - peertube_config_object_storage_credentials_secret_access_key
     - peertube_config_object_storage_streaming_playlists_bucket_name
     - peertube_config_object_storage_web_videos_bucket_name
+
+- name: Fail if SMTP settings are missing (and SMTP is enabled by setting host)
+  ansible.builtin.fail:
+    msg: >-
+      You need to define a required configuration setting (`{{ item }}`) to correctly set up email via SMTP.
+  when: "peertube_config_smtp_hostname !='' and lookup('vars', item, default='') | string | length == 0"
+  with_items:
+    - peertube_config_smtp_from
 
 - name: Run if Traefik is enabled
   when: peertube_container_labels_traefik_enabled | bool
