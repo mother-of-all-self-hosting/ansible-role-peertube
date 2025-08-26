@@ -64,6 +64,12 @@
   with_items:
     - peertube_config_smtp_from
 
+- name: Fail if PeerTube logging level is invalid
+  ansible.builtin.fail:
+    msg: >-
+      peertube_config_log_level must be 'debug', 'info', 'warn', or 'error'
+  when: "peertube_config_log_level not in ['debug', 'info', 'warn', 'error']"
+
 - name: Run if Traefik is enabled
   when: peertube_container_labels_traefik_enabled | bool
   block:
