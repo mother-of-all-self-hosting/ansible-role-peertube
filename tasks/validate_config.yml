@@ -11,6 +11,7 @@
       Please change your configuration to rename the variable (`{{ item.old }}` -> `{{ item.new }}`).
   when: "lookup('ansible.builtin.varnames', ('^' + item.old + '$'), wantlist=True) | length > 0"
   with_items:
+    - { "old": "peertube_playbook_base_path", "new": "<Removed>" }
     - { "old": "peertube_config_dir_path", "new": "peertube_config_path" }
     - { "old": "peertube_data_dir_path", "new": "peertube_data_path" }
     - { "old": "peertube_config_database_hostname", "new": "peertube_database_hostname" }

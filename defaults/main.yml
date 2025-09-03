@@ -9,8 +9,8 @@
 
 peertube_enabled: true
 
-peertube_identifier: peertube-peertube
-peertube_base_path: "{{ peertube_playbook_base_path }}/peertube"
+peertube_identifier: peertube
+peertube_base_path: "/{{ peertube_identifier }}"
 peertube_config_path: "{{ peertube_base_path }}/config"
 peertube_data_path: "{{ peertube_base_path }}/data"
 
