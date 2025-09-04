@@ -37,18 +37,21 @@
         cmd: "rmdir {{ peertube_config_path }}"
       register: peertube_config_path_deletion_result
       changed_when: peertube_config_path_deletion_result.rc == 0
+      failed_when: false
 
     - name: Ensure PeerTube local data path does not exist if empty
       ansible.builtin.command:
         cmd: "rmdir {{ peertube_data_path }}"
       register: peertube_data_path_deletion_result
       changed_when: peertube_data_path_deletion_result.rc == 0
+      failed_when: false
 
     - name: Ensure PeerTube base path does not exist if empty
       ansible.builtin.command:
         cmd: "rmdir {{ peertube_base_path }}"
       register: peertube_base_path_deletion_result
       changed_when: peertube_base_path_deletion_result.rc == 0
+      failed_when: false
 
     - name: Ensure PeerTube container network does not exist via community.docker.docker_network
       when: devture_systemd_docker_base_container_network_creation_method == 'ansible-module'
