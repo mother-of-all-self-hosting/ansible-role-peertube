@@ -102,7 +102,7 @@ peertube_container_labels_traefik_additional_response_headers_auto: |
     | combine ({'X-XSS-Protection': peertube_http_header_xss_protection} if peertube_http_header_xss_protection else {})
     | combine ({'X-Content-Type-Options': peertube_http_header_content_type_options} if peertube_http_header_content_type_options else {})
     | combine ({'Content-Security-Policy': peertube_http_header_content_security_policy} if peertube_http_header_content_security_policy else {})
-    | combine ({'Permission-Policy': peertube_http_header_content_permission_policy} if peertube_http_header_content_permission_policy else {})
+    | combine ({'Permissions-Policy': peertube_http_header_permissions_policy} if peertube_http_header_permissions_policy else {})
     | combine ({'Strict-Transport-Security': peertube_http_header_strict_transport_security} if peertube_http_header_strict_transport_security and peertube_container_labels_traefik_tls else {})
   }}
 peertube_container_labels_traefik_additional_response_headers_custom: {}
@@ -147,9 +147,9 @@ peertube_http_header_content_security_policy: |-
     if peertube_framing_prevention_enabled else ''
   }}
 
-# Specifies the value of the `Permission-Policy` header.
-# See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permission-Policy
-peertube_http_header_content_permission_policy: "{{ 'interest-cohort=()' if peertube_floc_optout_enabled else '' }}"
+# Specifies the value of the `Permissions-Policy` header.
+# See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy
+peertube_http_header_permissions_policy: "{{ 'interest-cohort=()' if peertube_floc_optout_enabled else '' }}"
 
 # Specifies the value of the `Strict-Transport-Security` header.
 # See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
@@ -163,7 +163,7 @@ peertube_http_header_strict_transport_security: "max-age=31536000; includeSubDom
 # - https://amifloced.org/
 #
 # Of course, a better solution is to just stop using browsers (like Chrome), which participate in such tracking practices.
-# See: `peertube_content_permission_policy`
+# See: `peertube_http_header_permissions_policy`
 peertube_floc_optout_enabled: true
 
 # Controls if HSTS preloading is enabled
