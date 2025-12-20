@@ -119,14 +119,6 @@ peertube_container_labels_additional_labels: ''
 # A list of extra arguments to pass to the container
 peertube_container_extra_arguments: []
 
-# peertube_environment_variables_additional_variables contains a multiline string with additional environment variables to pass to the container.
-#
-# Example:
-# peertube_environment_variables_additional_variables: |
-#   VAR=1
-#   ANOTHER=value
-peertube_environment_variables_additional_variables: ''
-
 # Specifies the value of the `X-XSS-Protection` header
 # Stops pages from loading when they detect reflected cross-site scripting (XSS) attacks.
 #
@@ -305,3 +297,14 @@ peertube_config_object_storage_upload_acl_private: private
 # Controls the PEERTUBE_LOG_LEVEL environment variable.
 # Valid values: debug, info, warn, error
 peertube_config_log_level: info
+
+# Specify the timezone
+peertube_environment_variables_tz: UTC
+
+# peertube_environment_variables_additional_variables contains a multiline string with additional environment variables to pass to the container.
+#
+# Example:
+# peertube_environment_variables_additional_variables: |
+#   VAR=1
+#   ANOTHER=value
+peertube_environment_variables_additional_variables: ''
