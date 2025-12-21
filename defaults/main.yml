@@ -17,11 +17,11 @@ peertube_data_path: "{{ peertube_base_path }}/data"
 # renovate: datasource=docker depName=chocobozzz/peertube versioning=semver
 peertube_version: v7.2.3
 
-peertube_uid: ''
-peertube_gid: ''
+peertube_uid: ""
+peertube_gid: ""
 
 # The hostname at which PeerTube is served.
-peertube_hostname: ''
+peertube_hostname: ""
 
 # The path at which PeerTube is exposed.
 # This value must either be `/` or not end with a slash (e.g. `/peertube`).
@@ -40,12 +40,12 @@ peertube_distro_variant: bookworm
 # Controls whether the container exposes its HTTP port (tcp/9000 in the container).
 #
 # Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:9000"), or empty string to not expose.
-peertube_container_http_host_bind_port: ''
+peertube_container_http_host_bind_port: ""
 
 # Controls whether the container exposes its RTMP port (tcp/1935 and udp/1935 in the container).
 #
 # Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:1935"), or empty string to not expose.
-peertube_container_rtmp_host_bind_port: ''
+peertube_container_rtmp_host_bind_port: ""
 
 # The base container network. It will be auto-created by this role if it doesn't exist already.
 peertube_container_network: "{{ peertube_identifier }}"
@@ -77,7 +77,7 @@ peertube_container_additional_volumes_custom: []
 #
 # To inject your own other container labels, see `peertube_container_labels_additional_labels`.
 peertube_container_labels_traefik_enabled: true
-peertube_container_labels_traefik_docker_network: ''
+peertube_container_labels_traefik_docker_network: ""
 peertube_container_labels_traefik_hostname: "{{ peertube_hostname }}"
 # The path prefix must either be `/` or not end with a slash (e.g. `/peertube`).
 peertube_container_labels_traefik_path_prefix: "{{ peertube_path_prefix }}"
@@ -214,20 +214,20 @@ peertube_trusted_proxies_values_custom: []
 peertube_start_wait_time: 15
 peertube_migration_wait_time: 1800
 
-peertube_database_hostname: ''
+peertube_database_hostname: ""
 peertube_database_port: 5432
 peertube_database_name: peertube
 peertube_database_username: peertube
-peertube_database_password: ''
+peertube_database_password: ""
 peertube_database_sslmode: false
 
-peertube_config_smtp_hostname: ''
+peertube_config_smtp_hostname: ""
 peertube_config_smtp_port: 587
-peertube_config_smtp_username: ''
-peertube_config_smtp_password: ''
+peertube_config_smtp_username: ""
+peertube_config_smtp_password: ""
 peertube_config_smtp_tls: false
 peertube_config_smtp_disable_starttls: true
-peertube_config_smtp_from: ''
+peertube_config_smtp_from: ""
 
 # Controls the PEERTUBE_TRUST_PROXY environment variable, which specifies the trusted proxies.
 #
@@ -245,13 +245,13 @@ peertube_config_trust_proxy: |-
 
 # Controls the PEERTUBE_SECRET environment variable.
 # Generate a strong one with `pwgen -s 64 1`
-peertube_config_secret: ''
+peertube_config_secret: ""
 
 # Controls the PEERTUBE_ADMIN_EMAIL environment variable
-peertube_config_admin_email: ''
+peertube_config_admin_email: ""
 
 # Controls the PEERTUBE_REDIS_HOSTNAME environment variable
-peertube_redis_hostname: ''
+peertube_redis_hostname: ""
 
 # Control the PEERTUBE_REDIS_DB environment variable
 peertube_redis_db: 0
@@ -261,38 +261,38 @@ peertube_redis_db: 0
 #
 # While PeerTube allows this to be left empty and causes it to auto-generate the password in such cases (and spew it in the log),
 # this Ansible role requires that a password is always explicitly defined.
-peertube_config_root_user_initial_password: ''
+peertube_config_root_user_initial_password: ""
 
 # Controls the PEERTUBE_OBJECT_STORAGE_ENABLED environment variable for enabling Object Storage.
 # See: https://docs.joinpeertube.org/admin-remote-storage
 peertube_config_object_storage_enabled: false
 # Controls the PEERTUBE_OBJECT_STORAGE_ENDPOINT environment variable.
 # Example: s3.us-east-1.amazonaws.com
-peertube_config_object_storage_endpoint: ''
+peertube_config_object_storage_endpoint: ""
 # Controls the PEERTUBE_OBJECT_STORAGE_REGION environment variable.
 # Example: us-east-1
-peertube_config_object_storage_region: ''
+peertube_config_object_storage_region: ""
 
 # Controls the PEERTUBE_OBJECT_STORAGE_CREDENTIALS_ACCESS_KEY_ID environment variable.
-peertube_config_object_storage_credentials_access_key_id: ''
+peertube_config_object_storage_credentials_access_key_id: ""
 # Controls the PEERTUBE_OBJECT_STORAGE_CREDENTIALS_SECRET_ACCESS_KEY environment variable.
-peertube_config_object_storage_credentials_secret_access_key: ''
+peertube_config_object_storage_credentials_secret_access_key: ""
 
 # Controls the PEERTUBE_OBJECT_STORAGE_STREAMING_PLAYLISTS_BUCKET_NAME environment variable.
 # Example: hls-videos
-peertube_config_object_storage_streaming_playlists_bucket_name: ''
+peertube_config_object_storage_streaming_playlists_bucket_name: ""
 # Controls the PEERTUBE_OBJECT_STORAGE_STREAMING_PLAYLISTS_PREFIX environment variable
-peertube_config_object_storage_streaming_playlists_prefix: ''
+peertube_config_object_storage_streaming_playlists_prefix: ""
 # Controls the PEERTUBE_OBJECT_STORAGE_STREAMING_PLAYLISTS_BASE_URL environment variable
-peertube_config_object_storage_streaming_playlists_base_url: ''
+peertube_config_object_storage_streaming_playlists_base_url: ""
 
 # Controls the PEERTUBE_OBJECT_STORAGE_WEB_VIDEOS_BUCKET_NAME environment variable.
 # Example: webtorrent-videos
-peertube_config_object_storage_web_videos_bucket_name: ''
+peertube_config_object_storage_web_videos_bucket_name: ""
 # Controls the PEERTUBE_OBJECT_STORAGE_WEB_VIDEOS_PREFIX environment variable
-peertube_config_object_storage_web_videos_prefix: ''
+peertube_config_object_storage_web_videos_prefix: ""
 # Controls the PEERTUBE_OBJECT_STORAGE_WEB_VIDEOS_BASE_URL environment variable
-peertube_config_object_storage_web_videos_base_url: ''
+peertube_config_object_storage_web_videos_base_url: ""
 
 # Controls the PEERTUBE_OBJECT_STORAGE_UPLOAD_ACL_PUBLIC environment variable
 peertube_config_object_storage_upload_acl_public: public-read
@@ -312,4 +312,4 @@ peertube_environment_variables_tz: UTC
 # peertube_environment_variables_additional_variables: |
 #   VAR=1
 #   ANOTHER=value
-peertube_environment_variables_additional_variables: ''
+peertube_environment_variables_additional_variables: ""
