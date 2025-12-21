@@ -23,7 +23,7 @@ peertube_gid: ""
 # The hostname at which PeerTube is served.
 peertube_hostname: ""
 
-# The path at which PeerTube is exposed.
+# The path at which PeerTube is served.
 # This value must either be `/` or not end with a slash (e.g. `/peertube`).
 # At the moment, this can only be set to `/`. It doesn't seem like PeerTube supports being hosted at a subpath.
 peertube_path_prefix: /
