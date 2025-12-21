@@ -119,7 +119,7 @@ peertube_container_labels_additional_labels: "{{ peertube_container_labels_addit
 peertube_container_labels_additional_labels_auto: {}
 peertube_container_labels_additional_labels_custom: {}
 
-# A list of extra arguments to pass to the container
+# A list of extra arguments to pass to the container (`docker create` command)
 peertube_container_extra_arguments: "{{ peertube_container_extra_arguments_auto + peertube_container_extra_arguments_custom }}"
 peertube_container_extra_arguments_auto: []
 peertube_container_extra_arguments_custom: []
