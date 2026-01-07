@@ -113,11 +113,11 @@ peertube_container_labels_traefik_additional_response_headers_custom: {}
 #
 # Example:
 # peertube_container_labels_additional_labels_custom: |
-#   my.label=1
-#   another.label="here"
-peertube_container_labels_additional_labels: "{{ peertube_container_labels_additional_labels_auto | combine(peertube_container_labels_additional_labels_custom) }}"
-peertube_container_labels_additional_labels_auto: {}
-peertube_container_labels_additional_labels_custom: {}
+#   - my.label=1
+#   - another.label="here"
+peertube_container_labels_additional_labels: "{{ peertube_container_labels_additional_labels_auto + peertube_container_labels_additional_labels_custom }}"
+peertube_container_labels_additional_labels_auto: []
+peertube_container_labels_additional_labels_custom: []
 
 # A list of extra arguments to pass to the container (`docker create` command)
 peertube_container_extra_arguments: "{{ peertube_container_extra_arguments_auto + peertube_container_extra_arguments_custom }}"
