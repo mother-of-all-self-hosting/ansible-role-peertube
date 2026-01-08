@@ -22,9 +22,9 @@
   ansible.builtin.template:
     src: "{{ role_path }}/templates/{{ item }}.j2"
     dest: "{{ peertube_base_path }}/{{ item }}"
+    mode: "0640"
     owner: "{{ peertube_uid }}"
     group: "{{ peertube_gid }}"
-    mode: "0640"
   with_items:
     - env
     - labels
@@ -95,6 +95,6 @@
   ansible.builtin.template:
     src: "{{ role_path }}/templates/INSTALLED_VERSION.j2"
     dest: "{{ peertube_base_path }}/INSTALLED_VERSION"
+    mode: "0640"
     owner: "{{ peertube_uid }}"
     group: "{{ peertube_gid }}"
-    mode: "0640"
