@@ -39,12 +39,12 @@ peertube_distro_variant: bookworm
 
 # Controls whether the container exposes its HTTP port (tcp/9000 in the container).
 #
-# Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:9000"), or empty string to not expose.
+# Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:2586"), or empty string to not expose.
 peertube_container_http_host_bind_port: ""
 
 # Controls whether the container exposes its RTMP port (tcp/1935 and udp/1935 in the container).
 #
-# Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:1935"), or empty string to not expose.
+# Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:2586"), or empty string to not expose.
 peertube_container_rtmp_host_bind_port: ""
 
 # The base container network. It will be auto-created by this role if it doesn't exist already.
