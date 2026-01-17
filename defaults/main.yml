@@ -40,12 +40,12 @@ peertube_distro_variant: bookworm
 # The base container network. It will be auto-created by this role if it doesn't exist already.
 peertube_container_network: "{{ peertube_identifier }}"
 
-# Controls whether the container exposes its HTTP port (tcp/9000 in the container).
+# Specify how the container publishes its HTTP port (as defined by `peertube_container_http_port`).
 #
 # Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:2586"), or empty string to not expose.
 peertube_container_http_host_bind_port: ""
 
-# Controls whether the container exposes its RTMP port (tcp/1935 and udp/1935 in the container).
+# Specify how the container publishes its RTMP port (as defined by `peertube_container_rtmp_port`).
 #
 # Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:2586"), or empty string to not expose.
 peertube_container_rtmp_host_bind_port: ""
