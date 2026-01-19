@@ -25,7 +25,9 @@ peertube_hostname: ""
 
 # The path at which PeerTube is served.
 # This value must either be `/` or not end with a slash (e.g. `/peertube`).
-# At the moment, this can only be set to `/`. It doesn't seem like PeerTube supports being hosted at a subpath.
+#
+# Hosting PeerTube under a subpath does not seem to be possible due to PeerTube's
+# technical limitations.
 peertube_path_prefix: /
 
 peertube_container_image: "{{ peertube_container_image_registry_prefix }}chocobozzz/peertube:{{ peertube_container_image_tag }}"
