@@ -59,7 +59,8 @@ peertube_container_http_port: 9000
 peertube_container_rtmp_port: 1935
 
 # A list of additional container networks that the container would be connected to.
-# The playbook does not create these networks, so make sure they already exist.
+# The role does not create these networks, so make sure they already exist.
+# Use this to expose this container to another reverse proxy, which runs in a different container network.
 # Use this to expose the container to another reverse proxy, which runs in a different container network.
 peertube_container_additional_networks: "{{ peertube_container_additional_networks_auto + peertube_container_additional_networks_custom }}"
 peertube_container_additional_networks_auto: []
