@@ -15,7 +15,7 @@ peertube_config_path: "{{ peertube_base_path }}/config"
 peertube_data_path: "{{ peertube_base_path }}/data"
 
 # renovate: datasource=docker depName=chocobozzz/peertube versioning=semver
-peertube_version: v7.2.3
+peertube_version: v8.0.2
 
 peertube_uid: ""
 peertube_gid: ""
