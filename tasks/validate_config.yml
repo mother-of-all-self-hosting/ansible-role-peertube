@@ -18,6 +18,7 @@
     - { "old": "peertube_config_database_port", "new": "peertube_database_port" }
     - { "old": "peertube_config_database_username", "new": "peertube_database_username" }
     - { "old": "peertube_config_database_password", "new": "peertube_database_password" }
+    - { "old": "peertube_database_sslmode", "new": "peertube_database_ssl_enabled" }
     - { "old": "peertube_config_object_storage_videos_bucket_name", "new": "peertube_config_object_storage_web_videos_bucket_name" }
     - { "old": "peertube_config_object_storage_videos_prefix", "new": "peertube_config_object_storage_web_videos_prefix" }
     - { "old": "peertube_config_object_storage_videos_base_url", "new": "peertube_config_object_storage_web_videos_base_url" }

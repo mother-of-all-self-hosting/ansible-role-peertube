@@ -254,12 +254,13 @@ peertube_trusted_proxies_values_custom: []
 peertube_start_wait_time: 15
 peertube_migration_wait_time: 1800
 
+# Specify database configuration
 peertube_database_hostname: ""
 peertube_database_port: 5432
-peertube_database_name: peertube
 peertube_database_username: peertube
 peertube_database_password: ""
-peertube_database_sslmode: false
+peertube_database_name: peertube
+peertube_database_ssl_enabled: false
 
 peertube_config_smtp_hostname: ""
 peertube_config_smtp_port: 587
