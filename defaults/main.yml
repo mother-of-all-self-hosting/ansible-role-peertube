@@ -1,6 +1,6 @@
-# SPDX-FileCopyrightText: 2023 - 2025 Slavi Pantaleev
+# SPDX-FileCopyrightText: 2023-2025 Slavi Pantaleev
 # SPDX-FileCopyrightText: 2024 Nikita Chernyi
-# SPDX-FileCopyrightText: 2025 Suguru Hirahara
+# SPDX-FileCopyrightText: 2025, 2026 Suguru Hirahara
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -230,6 +230,37 @@ peertube_container_cleanup_command: |
   echo "Failed to remove stale container {{ peertube_identifier }} after {{ peertube_container_cleanup_timeout_seconds }} attempts" >&2;
   exit 1
 
+########################################################################
+#                                                                      #
+# database                                                             #
+#                                                                      #
+########################################################################
+
+# Specify database configuration
+peertube_database_hostname: ""
+peertube_database_port: 5432
+peertube_database_username: peertube
+peertube_database_password: ""
+peertube_database_ssl_enabled: false
+peertube_database_name: peertube
+
+# Control if the database connection to Postgres is made via a Unix socket
+peertube_database_socket_enabled: false
+
+# Specify the path to the Postgres Unix socket path inside the PeerTube container
+peertube_database_socket_path_container: /run-postgres
+
+# Specify the path to the Postgres Unix socket path on the host (bind-mount source)
+peertube_database_socket_path_host: ""
+
+peertube_environment_variables_peertube_db_hostname: "{{ peertube_database_socket_path_container if peertube_database_socket_enabled else peertube_database_hostname }}"
+
+########################################################################
+#                                                                      #
+# /database                                                            #
+#                                                                      #
+########################################################################
+
 # Controls which values to register in PEERTUBE_TRUST_PROXY
 # See `peertube_config_trust_proxy`.
 # Your own custom changes should be added to `peertube_trusted_proxies_values_custom`.
@@ -253,14 +284,6 @@ peertube_trusted_proxies_values_custom: []
 
 peertube_start_wait_time: 15
 peertube_migration_wait_time: 1800
-
-# Specify database configuration
-peertube_database_hostname: ""
-peertube_database_port: 5432
-peertube_database_username: peertube
-peertube_database_password: ""
-peertube_database_name: peertube
-peertube_database_ssl_enabled: false
 
 peertube_config_smtp_hostname: ""
 peertube_config_smtp_port: 587

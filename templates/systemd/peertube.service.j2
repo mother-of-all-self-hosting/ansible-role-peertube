@@ -1,7 +1,7 @@
 {#
-SPDX-FileCopyrightText: 2023 - 2025 Slavi Pantaleev
+SPDX-FileCopyrightText: 2023-2025 Slavi Pantaleev
 SPDX-FileCopyrightText: 2024 Nikita Chernyi
-SPDX-FileCopyrightText: 2025 Suguru Hirahara
+SPDX-FileCopyrightText: 2025, 2026 Suguru Hirahara
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 #}
@@ -42,6 +42,9 @@ ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
       --mount type=bind,src={{ peertube_config_path }},dst=/config \
       --mount type=bind,src={{ peertube_data_path }},dst=/data \
       --mount type=bind,src={{ peertube_data_path }},dst=/app/storage \
+      {% if peertube_database_socket_enabled and peertube_database_socket_path_host != '' %}
+      --mount type=bind,src={{ peertube_database_socket_path_host }},dst={{ peertube_database_socket_path_container }} \
+      {% endif %}
       {% for volume in peertube_container_additional_volumes %}
       --mount type={{ volume.type | default('bind' if '/' in volume.src else 'volume') }},src={{ volume.src }},dst={{ volume.dst }}{{ (',' + volume.options) if volume.options | default('') else '' }} \
       {% endfor %}
