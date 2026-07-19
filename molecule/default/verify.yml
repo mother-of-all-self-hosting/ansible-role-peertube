@@ -1,0 +1,53 @@
+# SPDX-FileCopyrightText: 2026 Suguru Hirahara
+# SPDX-FileCopyrightText: 2026 spatterlight
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+---
+- name: Verify PeerTube systemd service
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Wait for PeerTube service to become active (up to 180s)
+      ansible.builtin.systemd:
+        name: peertube.service
+      register: peertube_service
+      until: peertube_service.status.ActiveState == 'active'
+      retries: 36
+      delay: 5
+
+    - name: Assert PeerTube service is active
+      ansible.builtin.assert:
+        that: peertube_service.status.ActiveState == 'active'
+        fail_msg: "peertube.service not active ({{ peertube_service.status.ActiveState }})"
+        success_msg: "peertube.service is active"
+
+    - name: Retrieve PeerTube service log for debugging
+      when: peertube_debug_service_enabled | bool
+      ansible.builtin.command:
+        cmd: journalctl -xeu peertube.service
+      changed_when: false
+
+    - name: Wait for PeerTube HTTP endpoint to respond (up to 10m)
+      ansible.builtin.uri:
+        url: "http://localhost:9000/"
+        method: GET
+        status_code: [200, 301, 302]
+        follow_redirects: none
+      register: peertube_endpoint
+      until: peertube_endpoint.status in [200, 301, 302]
+      retries: 120
+      delay: 5
+
+    - name: Assert PeerTube HTTP endpoint responds
+      ansible.builtin.assert:
+        that: peertube_endpoint.status in [200, 301, 302]
+        fail_msg: "PeerTube did not respond as expected ({{ peertube_endpoint.status | default('no response') }})"
+        success_msg: "PeerTube responded with {{ peertube_endpoint.status }}"
+
+    - name: Show PeerTube systemd service status summary
+      ansible.builtin.debug:
+        msg:
+          - "PeerTube systemd: {{ peertube_service.status.ActiveState }}"
+          - "PeerTube HTTP: {{ peertube_endpoint.status }}"
