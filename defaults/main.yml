@@ -14,6 +14,11 @@ peertube_base_path: "/{{ peertube_identifier }}"
 peertube_config_path: "{{ peertube_base_path }}/config"
 peertube_data_path: "{{ peertube_base_path }}/data"
 
+# PeerTube publishes its 6.x/7.x images only under Debian-flavoured tags (`v7.2.3-bookworm`),
+# so `.github/renovate.json` carries an `extractVersion` rule reading the version out of those.
+# The tags of 8.x and later drop the (upstream-deprecated) Debian suffix, so moving to those
+# means changing `peertube_distro_variant` and that rule together.
+#
 # renovate: datasource=docker depName=chocobozzz/peertube versioning=semver
 peertube_version: v7.2.3
 
