@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 Slavi Pantaleev
 # SPDX-FileCopyrightText: 2026 spatterlight
 # SPDX-FileCopyrightText: 2026 Suguru Hirahara
 #
@@ -18,7 +19,13 @@
     - name: Ensure required packages are installed for PeerTube Molecule tests preparation
       ansible.builtin.package:
         name:
+          # Used by the `ansible.builtin.uri` calls in verify.yml
           - python3-requests
+          # The storage driver Docker is configured with below. `overlay2` cannot be
+          # nested inside the container Molecule runs these tests in, and `vfs` (the usual
+          # fallback) has no copy-on-write, so it writes out every layer of PeerTube's
+          # image in full.
+          - fuse-overlayfs
         state: present
 
     - name: Ensure Docker is installed for PeerTube Molecule tests preparation
@@ -26,4 +33,4 @@
         name: ansible-role-docker
       vars:
         docker_daemon_options:
-          storage-driver: vfs
+          storage-driver: fuse-overlayfs

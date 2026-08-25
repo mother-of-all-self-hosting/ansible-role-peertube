@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 Slavi Pantaleev
 # SPDX-FileCopyrightText: 2026 spatterlight
 # SPDX-FileCopyrightText: 2026 Suguru Hirahara
 #
@@ -34,13 +35,19 @@ provisioner:
         # Variables for PeerTube
         peertube_uid: 1000
         peertube_gid: 1000
-        peertube_scheme: http
-        peertube_hostname: localhost
+        # Deliberately not `localhost`. PeerTube refuses to hand out OAuth client
+        # credentials to a request whose Host header does not match the hostname it was
+        # configured with, which verify.yml uses to tell a PeerTube that got the role's
+        # configuration from one that fell back to its own defaults.
+        peertube_hostname: peertube.local
         peertube_container_labels_traefik_enabled: false
-        peertube_container_http_host_bind_port: 9000
-        peertube_config_secret: secret
-        peertube_config_admin_email: example@example.com
-        peertube_config_root_user_initial_password: password
+        # Deliberately not PeerTube's own default of 9000, so that a `listen.port` which
+        # never reaches the process cannot pass for one that did.
+        peertube_container_http_port: 9012
+        peertube_container_http_host_bind_port: "127.0.0.1:9012"
+        peertube_config_secret: molecule-secret
+        peertube_config_admin_email: molecule-admin@example.com
+        peertube_config_root_user_initial_password: molecule-root-password
 
         # Variables required for PeerTube to connect to the Postgres database (via Unix socket)
         peertube_database_username: my_database_username
@@ -56,6 +63,10 @@ provisioner:
 
         # Variables required for PeerTube to connect to the Valkey data-store
         peertube_redis_hostname: "{{ valkey_identifier }}"
+        # Deliberately not Valkey's default database of 0, so that verify.yml can tell
+        # PeerTube using the data-store the role pointed it at from PeerTube using it
+        # the way it would have on its own.
+        peertube_redis_db: 4
         peertube_container_additional_networks_custom:
           - "{{ valkey_container_network }}"
         peertube_systemd_required_services_list_custom:
