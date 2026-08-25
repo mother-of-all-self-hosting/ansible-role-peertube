@@ -192,9 +192,11 @@
           name: "{{ peertube_molecule_channel_name }}"
           displayName: "{{ peertube_molecule_channel_display_name }}"
         follow_redirects: none
-        status_code: [200]
+        # 409 is what PeerTube answers when the channel is already there, which is
+        # what a second run of this play finds. The read-back below is what decides.
+        status_code: [200, 409]
       register: peertube_channel_creation
-      changed_when: true
+      changed_when: peertube_channel_creation.status == 200
 
     - name: Read the video channel back over the PeerTube API
       ansible.builtin.uri:
