@@ -47,7 +47,9 @@ Currently there is one testing scenario available.
 
 ### `default`
 
-Tests a standard PeerTube installation.
+Installs PeerTube against a Postgres database (reached over a Unix socket) and a Valkey data-store, and then drives PeerTube's own API: it asks for OAuth client credentials, logs in as the `root` account with the password the role passed, reads that account back, creates a video channel and reads it back — then cross-checks the channel in Postgres and PeerTube's job queues in Valkey.
+
+Several of the scenario's variables are deliberately set away from PeerTube's own defaults (`peertube_container_http_port` to 9012, `peertube_redis_db` to 4, `peertube_hostname` to `peertube.local`), so that a setting which never reaches the process cannot pass for one that did.
 
 ## Running
 
