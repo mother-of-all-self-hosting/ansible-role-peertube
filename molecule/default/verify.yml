@@ -18,13 +18,13 @@
     peertube_molecule_channel_display_name: Molecule Channel
 
   tasks:
-    - name: Read the PeerTube role's own defaults
-      # Read into a namespace of their own: these are only consulted for values which
-      # describe the role (the version Renovate bumps, the image it composes), and must
-      # not be allowed to outrank the scenario's own group_vars.
+    # The role is not included in this playbook, so its defaults are not in
+    # scope. Reading defaults/main.yml directly ties the version assertion
+    # below.
+    - name: Load the role defaults
       ansible.builtin.include_vars:
         file: "{{ lookup('ansible.builtin.env', 'MOLECULE_PROJECT_DIRECTORY') }}/defaults/main.yml"
-        name: peertube_role_defaults
+        name: peertube_defaults
 
     - name: Wait for the PeerTube service to become active
       ansible.builtin.systemd_service:
@@ -64,15 +64,15 @@
       ansible.builtin.assert:
         that: >-
           peertube_container_image_result.stdout ==
-          peertube_role_defaults.peertube_container_image_registry_prefix_upstream_default
+          peertube_defaults.peertube_container_image_registry_prefix_upstream_default
           ~ 'chocobozzz/peertube:'
-          ~ peertube_role_defaults.peertube_version
+          ~ peertube_defaults.peertube_version
           ~ '-'
-          ~ peertube_role_defaults.peertube_distro_variant
+          ~ peertube_defaults.peertube_distro_variant
         fail_msg: >-
           The container runs {{ peertube_container_image_result.stdout }}, not the image composed
-          from peertube_version ({{ peertube_role_defaults.peertube_version }}) and
-          peertube_distro_variant ({{ peertube_role_defaults.peertube_distro_variant }})
+          from peertube_version ({{ peertube_defaults.peertube_version }}) and
+          peertube_distro_variant ({{ peertube_defaults.peertube_distro_variant }})
         success_msg: "The container runs {{ peertube_container_image_result.stdout }}"
 
     # PeerTube's `listen.port` has no dedicated environment variable in the container
@@ -95,11 +95,11 @@
       ansible.builtin.assert:
         that: >-
           peertube_config_endpoint.json.serverVersion ==
-          peertube_role_defaults.peertube_version | regex_replace('^v', '')
+          peertube_defaults.peertube_version | regex_replace('^v', '')
         fail_msg: >-
-          PeerTube reports version {{ peertube_config_endpoint.json.serverVersion }}, but
-          peertube_version is {{ peertube_role_defaults.peertube_version }}
-        success_msg: "PeerTube reports version {{ peertube_config_endpoint.json.serverVersion }}"
+          PeerTube reports {{ peertube_config_endpoint.json.serverVersion }}, but
+          peertube_version is {{ peertube_defaults.peertube_version }}
+        success_msg: "PeerTube reports {{ peertube_config_endpoint.json.serverVersion }}"
 
     # PeerTube hands out OAuth client credentials only to requests whose Host header
     # matches the hostname it was configured with. A PeerTube which never received
