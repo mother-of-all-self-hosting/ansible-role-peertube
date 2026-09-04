@@ -293,13 +293,13 @@
           Valkey database {{ peertube_redis_db }} holds
           {{ peertube_valkey_keys.stdout_lines | length }} of PeerTube's job queue keys
 
-    - name: Show what PeerTube was verified to be doing
+    - name: Show the PeerTube verification summary
       ansible.builtin.debug:
         msg:
-          - "systemd: {{ peertube_service.status.ActiveState }}"
-          - "image: {{ peertube_container_image_result.stdout }}"
-          - "version: {{ peertube_config_endpoint.json.serverVersion }}"
-          - "listening on: {{ peertube_molecule_url }} as {{ peertube_hostname }}"
-          - "administrator: {{ peertube_me.json.username }} <{{ peertube_me.json.email }}>"
-          - "channel in Postgres: {{ peertube_database_lookup.stdout }}"
-          - "job queue keys in Valkey database {{ peertube_redis_db }}: {{ peertube_valkey_keys.stdout_lines | length }}"
+          - "PeerTube systemd: {{ peertube_service.status.ActiveState }}"
+          - "PeerTube version: {{ peertube_config_endpoint.json.serverVersion }}"
+          - "PeerTube image: {{ peertube_container_image_result.stdout }}"
+          - "PeerTube listening on: {{ peertube_molecule_url }} as {{ peertube_hostname }}"
+          - "PeerTube administrator: {{ peertube_me.json.username }} <{{ peertube_me.json.email }}>"
+          - "PeerTube channel in Postgres: {{ peertube_database_lookup.stdout }}"
+          - "PeerTube job queue keys in Valkey database {{ peertube_redis_db }}: {{ peertube_valkey_keys.stdout_lines | length }}"
