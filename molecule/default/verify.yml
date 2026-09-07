@@ -26,23 +26,27 @@
         file: "{{ lookup('ansible.builtin.env', 'MOLECULE_PROJECT_DIRECTORY') }}/defaults/main.yml"
         name: peertube_defaults
 
-    - name: Wait for the PeerTube service to become active
+    - name: Wait for the PeerTube systemd service to become active
       ansible.builtin.systemd_service:
         name: peertube.service
       register: peertube_service
       until: peertube_service.status.ActiveState == 'active'
       retries: 36
       delay: 5
+      # So that giving up is reported by the assertion below rather than as a
+      # wall of systemd unit properties.
+      failed_when: false
 
-    # `Restart=always` makes a crash-looping container look active, so this only rules
-    # out the unit having given up entirely. The assertions below are what decide.
-    - name: Assert the PeerTube service is active
+    # `Restart=always` in the systemd unit means that even a container which crashes
+    # and gets restarted reads as active here, so this is a precondition rather than
+    # a result.
+    - name: Assert the PeerTube systemd service is active
       ansible.builtin.assert:
         that: peertube_service.status.ActiveState == 'active'
-        fail_msg: "peertube.service is {{ peertube_service.status.ActiveState }}, not active"
+        fail_msg: "peertube.service is not active ({{ peertube_service.status.ActiveState }})"
         success_msg: "peertube.service is active"
 
-    - name: Retrieve the PeerTube service log for debugging
+    - name: Retrieve the PeerTube systemd service log for debugging
       when: peertube_debug_service_enabled | bool
       ansible.builtin.command:
         cmd: journalctl -xeu peertube.service
