@@ -20,7 +20,7 @@ peertube_data_path: "{{ peertube_base_path }}/data"
 # means changing `peertube_distro_variant` and that rule together.
 #
 # renovate: datasource=docker depName=chocobozzz/peertube versioning=semver
-peertube_version: v7.2.3
+peertube_version: v7.3.0
 
 peertube_uid: ""
 peertube_gid: ""
