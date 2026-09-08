@@ -49,7 +49,7 @@
     - name: Retrieve the PeerTube systemd service log for debugging
       when: peertube_debug_service_enabled | bool
       ansible.builtin.command:
-        cmd: journalctl -xeu peertube.service
+        cmd: journalctl --no-pager --output=cat --unit=peertube.service
       changed_when: false
 
     - name: Determine which image the PeerTube container runs
