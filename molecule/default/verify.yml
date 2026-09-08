@@ -54,13 +54,7 @@
 
     - name: Determine which image the PeerTube container runs
       ansible.builtin.command:
-        argv:
-          - docker
-          - container
-          - inspect
-          - peertube
-          - --format
-          - "{{ '{{' }} .Config.Image {{ '}}' }}"
+        cmd: "docker container inspect peertube --format {{ '{{' }} .Config.Image {{ '}}' }}"
       register: peertube_container_image_result
       changed_when: false
 
