@@ -18,6 +18,8 @@
     peertube_molecule_channel_display_name: Molecule Channel
 
   tasks:
+    - name: Verify that PeerTube works
+      block:
     # The role is not included in this playbook, so its defaults are not in
     # scope. Reading defaults/main.yml directly ties the version assertion
     # below.
@@ -301,3 +303,19 @@
           - "PeerTube administrator: {{ peertube_me.json.username }} <{{ peertube_me.json.email }}>"
           - "PeerTube channel in Postgres: {{ peertube_database_lookup.stdout }}"
           - "PeerTube job queue keys in Valkey database {{ peertube_redis_db }}: {{ peertube_valkey_keys.stdout_lines | length }}"
+
+      rescue:
+        # Whatever went wrong, the reason is almost always in the systemd service log.
+        - name: Retrieve the PeerTube systemd service log
+          ansible.builtin.command:
+            cmd: journalctl --no-pager --output=cat --unit=peertube.service
+          register: peertube_service_log
+          changed_when: false
+
+        - name: Show the PeerTube systemd service log
+          ansible.builtin.debug:
+            var: peertube_service_log.stdout_lines
+
+        - name: Fail because verification did not pass
+          ansible.builtin.fail:
+            msg: "PeerTube verification failed. The systemd service log is printed above."
