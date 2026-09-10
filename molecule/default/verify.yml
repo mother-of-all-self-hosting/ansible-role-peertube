@@ -54,9 +54,17 @@
             cmd: journalctl --no-pager --output=cat --unit=peertube.service
           changed_when: false
 
+        # `argv` rather than `cmd`, because a Go template holding a space would
+        # otherwise be split into separate arguments and Docker would reject it.
         - name: Determine which image the PeerTube container runs
           ansible.builtin.command:
-            cmd: "docker container inspect peertube --format {{ '{{' }} .Config.Image {{ '}}' }}"
+            argv:
+              - docker
+              - container
+              - inspect
+              - peertube
+              - --format
+              - "{{ '{{' }} .Config.Image {{ '}}' }}"
           register: peertube_container_image_result
           changed_when: false
 
