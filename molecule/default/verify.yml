@@ -266,7 +266,14 @@
 
     - name: Count the keys in Valkey's default database
       ansible.builtin.command:
-        argv: [docker, exec, valkey, valkey-cli, "-n", "0", DBSIZE]
+        argv:
+          - docker
+          - exec
+          - valkey
+          - valkey-cli
+          - "-n"
+          - "0"
+          - DBSIZE
       register: peertube_valkey_default_database_size
       changed_when: false
 
