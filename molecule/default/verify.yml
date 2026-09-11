@@ -17,6 +17,11 @@
     peertube_molecule_channel_name: molecule_channel
     peertube_molecule_channel_display_name: Molecule Channel
 
+    peertube_verify_units:
+      - peertube.service
+      - postgres.service
+      - valkey.service
+
   tasks:
     - name: Verify that PeerTube works
       block:
@@ -28,13 +33,14 @@
             file: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/defaults/main.yml"
             name: peertube_defaults
 
-        - name: Wait for the PeerTube systemd service to become active (up to 180s)
+        - name: Wait for the PeerTube systemd services to become active (up to 180s each)
           ansible.builtin.systemd_service:
-            name: peertube.service
-          register: peertube_service
-          until: peertube_service.status.ActiveState == 'active'
+            name: "{{ item }}"
+          register: peertube_services
+          until: peertube_services.status.ActiveState == 'active'
           retries: 36
           delay: 5
+          loop: "{{ peertube_verify_units }}"
           # So that giving up is reported by the assertion below rather than as a
           # wall of systemd unit properties.
           failed_when: false
@@ -42,17 +48,20 @@
         # `Restart=always` in the systemd unit means that even a container which crashes
         # and gets restarted reads as active here, so this is a precondition rather than
         # a result.
-        - name: Assert the PeerTube systemd service is active
+        - name: Assert the PeerTube systemd services are active
           ansible.builtin.assert:
-            that: peertube_service.status.ActiveState == 'active'
-            fail_msg: "peertube.service is not active ({{ peertube_service.status.ActiveState }})"
-            success_msg: "peertube.service is active"
+            that: peertube_services.results | map(attribute='status.ActiveState') | unique | list == ['active']
+            fail_msg: >-
+              Not every service is active:
+              {{ dict(peertube_verify_units | zip(peertube_services.results | map(attribute='status.ActiveState'))) }}
+            success_msg: "Every systemd service is active"
 
-        - name: Retrieve the PeerTube systemd service log for debugging
+        - name: Retrieve the PeerTube systemd services log for debugging
           when: peertube_debug_service_enabled | bool
           ansible.builtin.command:
-            cmd: journalctl --no-pager --output=cat --unit=peertube.service
+            cmd: "journalctl --no-pager --output=cat --unit={{ item }}"
           changed_when: false
+          loop: "{{ peertube_verify_units }}"
 
         # `argv` rather than `cmd`, because a Go template holding a space would
         # otherwise be split into separate arguments and Docker would reject it.
@@ -304,7 +313,7 @@
         - name: Show the PeerTube verification summary
           ansible.builtin.debug:
             msg:
-              - "PeerTube systemd: {{ peertube_service.status.ActiveState }}"
+              - "PeerTube systemd: {% for unit, state in peertube_verify_units | zip(peertube_services.results | map(attribute='status.ActiveState')) %}{{ unit }} ({{ state }}){% if not loop.last %}, {% endif %}{% endfor %}"
               - "PeerTube version: {{ peertube_config_endpoint.json.serverVersion }}"
               - "PeerTube image: {{ peertube_container_image_result.stdout }}"
               - "PeerTube listening on: {{ peertube_molecule_url }} as {{ peertube_hostname }}"
