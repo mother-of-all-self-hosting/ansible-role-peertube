@@ -141,8 +141,12 @@ peertube_container_labels_additional_labels_custom: []
 # If not enabled, /tmp will be persisted to disk (see `peertube_tmp_path`).
 peertube_container_tmpfs_tmp_enabled: true
 
-# Specify the size of the container's tmpfs volume (see `peertube_container_tmpfs_tmp_enabled`)
-peertube_container_tmpfs_tmp_size: 512m
+# Specify the size of the container's tmpfs volume (see `peertube_container_tmpfs_tmp_enabled`).
+#
+# This is only an upper limit - memory is only used for what is actually stored in /tmp.
+# The default is generous, because some operations need a lot of temporary space
+# (e.g. PeerTube installing the Python packages used for local video transcription needs 500MB+).
+peertube_container_tmpfs_tmp_size: "{{ (ansible_facts['memtotal_mb'] / 2) | round | int }}m"
 
 # A list of extra arguments to pass to the container (`docker create` command)
 peertube_container_extra_arguments: "{{ peertube_container_extra_arguments_auto + peertube_container_extra_arguments_custom }}"
