@@ -308,7 +308,9 @@ peertube_trusted_proxies_values_auto_trust_container_networks_list: ['172.16.0.0
 
 peertube_trusted_proxies_values_custom: []
 
-peertube_start_wait_time: 15
+# Controls how long (in seconds) to wait when upgrading an existing installation,
+# for PeerTube to finish its database migrations and for each of its manual migration scripts to complete.
+# See `peertube_manual_migration_scripts` in `../vars/main.yml`.
 peertube_migration_wait_time: 1800
 
 peertube_config_smtp_hostname: ""
