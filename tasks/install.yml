@@ -8,15 +8,27 @@
 
 - name: Ensure PeerTube paths exist
   ansible.builtin.file:
-    path: "{{ item }}"
+    path: "{{ item.path }}"
     state: directory
     mode: "0750"
     owner: "{{ peertube_uid }}"
     group: "{{ peertube_gid }}"
   with_items:
-    - "{{ peertube_base_path }}"
-    - "{{ peertube_config_path }}"
-    - "{{ peertube_data_path }}"
+    - path: "{{ peertube_base_path }}"
+      when: true
+    - path: "{{ peertube_config_path }}"
+      when: true
+    - path: "{{ peertube_data_path }}"
+      when: true
+    - path: "{{ peertube_tmp_path }}"
+      when: "{{ not peertube_container_tmpfs_tmp_enabled }}"
+  when: item.when | bool
+
+- name: Ensure PeerTube tmp path removed if tmp-on-tmpfs enabled
+  when: peertube_container_tmpfs_tmp_enabled | bool
+  ansible.builtin.file:
+    path: "{{ peertube_tmp_path }}"
+    state: absent
 
 - name: Ensure PeerTube support files installed
   ansible.builtin.template:

@@ -13,6 +13,8 @@ peertube_identifier: peertube
 peertube_base_path: "/{{ peertube_identifier }}"
 peertube_config_path: "{{ peertube_base_path }}/config"
 peertube_data_path: "{{ peertube_base_path }}/data"
+# See `peertube_container_tmpfs_tmp_enabled`
+peertube_tmp_path: "{{ peertube_base_path }}/tmp"
 
 # PeerTube publishes its 6.x/7.x images only under Debian-flavoured tags (`v7.2.3-bookworm`),
 # so `.github/renovate.json` carries an `extractVersion` rule reading the version out of those.
@@ -135,7 +137,11 @@ peertube_container_labels_additional_labels: "{{ peertube_container_labels_addit
 peertube_container_labels_additional_labels_auto: []
 peertube_container_labels_additional_labels_custom: []
 
-# Specify the size of the container's tmpfs volume
+# Controls whether /tmp should be a tmpfs.
+# If not enabled, /tmp will be persisted to disk (see `peertube_tmp_path`).
+peertube_container_tmpfs_tmp_enabled: true
+
+# Specify the size of the container's tmpfs volume (see `peertube_container_tmpfs_tmp_enabled`)
 peertube_container_tmpfs_tmp_size: 512m
 
 # A list of extra arguments to pass to the container (`docker create` command)
