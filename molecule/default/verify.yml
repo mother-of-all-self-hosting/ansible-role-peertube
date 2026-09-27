@@ -84,9 +84,7 @@
               peertube_defaults.peertube_container_image_registry_prefix_upstream_default
               ~ 'chocobozzz/peertube:'
               ~ peertube_defaults.peertube_version
-              ~ '-'
-              ~ peertube_defaults.peertube_distro_variant
-            fail_msg: "PeerTube reports {{ peertube_container_image_result.stdout | default('none') }}, expected {{ peertube_defaults.peertube_version }} with peertube_distro_variant ({{ peertube_defaults.peertube_distro_variant }})"
+            fail_msg: "PeerTube reports {{ peertube_container_image_result.stdout | default('none') }}, expected {{ peertube_defaults.peertube_version }}"
             success_msg: "PeerTube reports {{ peertube_container_image_result.stdout }}"
 
         # PeerTube's `listen.port` has no dedicated environment variable in the container
@@ -249,7 +247,7 @@
               - >-
                 SELECT actor."preferredUsername" || '=' || "videoChannel"."name"
                 FROM "videoChannel"
-                JOIN actor ON actor.id = "videoChannel"."actorId"
+                JOIN actor ON actor."videoChannelId" = "videoChannel".id
                 WHERE actor."preferredUsername" = '{{ peertube_molecule_channel_name }}'
           register: peertube_database_lookup
           changed_when: false

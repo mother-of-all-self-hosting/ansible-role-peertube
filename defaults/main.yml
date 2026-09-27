@@ -16,13 +16,8 @@ peertube_data_path: "{{ peertube_base_path }}/data"
 # See `peertube_container_tmpfs_tmp_enabled`
 peertube_tmp_path: "{{ peertube_base_path }}/tmp"
 
-# PeerTube publishes its 6.x/7.x images only under Debian-flavoured tags (`v7.2.3-bookworm`),
-# so `.github/renovate.json` carries an `extractVersion` rule reading the version out of those.
-# The tags of 8.x and later drop the (upstream-deprecated) Debian suffix, so moving to those
-# means changing `peertube_distro_variant` and that rule together.
-#
 # renovate: datasource=docker depName=chocobozzz/peertube versioning=semver
-peertube_version: v7.2.3
+peertube_version: v8.3.0
 
 peertube_uid: ""
 peertube_gid: ""
@@ -38,12 +33,10 @@ peertube_hostname: ""
 peertube_path_prefix: /
 
 peertube_container_image: "{{ peertube_container_image_registry_prefix }}chocobozzz/peertube:{{ peertube_container_image_tag }}"
-peertube_container_image_tag: "{{ peertube_version }}-{{ peertube_distro_variant }}"
+peertube_container_image_tag: "{{ peertube_version }}"
 peertube_container_image_registry_prefix: "{{ peertube_container_image_registry_prefix_upstream }}"
 peertube_container_image_registry_prefix_upstream: "{{ peertube_container_image_registry_prefix_upstream_default }}"
 peertube_container_image_registry_prefix_upstream_default: docker.io/
-
-peertube_distro_variant: bookworm
 
 # The base container network. It will be auto-created by this role if it doesn't exist already.
 peertube_container_network: "{{ peertube_identifier }}"
