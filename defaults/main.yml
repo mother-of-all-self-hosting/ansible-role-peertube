@@ -390,6 +390,14 @@ peertube_config_log_level: info
 # Specify the timezone
 peertube_environment_variables_tz: UTC
 
+# Controls the HF_HOME environment variable, which is where the Hugging Face libraries
+# used by local video transcription (e.g. `whisper-ctranslate2`) store the models they download.
+#
+# Without it, these libraries default to `$HOME/.cache/huggingface`, which is not writable,
+# as the container runs with a read-only root filesystem.
+# The default is a path in the data directory, so downloaded models persist across container restarts.
+peertube_environment_variable_hf_home: /data/huggingface
+
 # Controls the NODE_CONFIG environment variable, which node-config (the configuration library
 # PeerTube uses) merges over the configuration files shipped in the container image.
 #
