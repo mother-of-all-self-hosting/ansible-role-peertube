@@ -336,6 +336,13 @@ peertube_config_admin_email: ""
 # Controls the PEERTUBE_REDIS_HOSTNAME environment variable
 peertube_redis_hostname: ""
 
+# Controls the PEERTUBE_REDIS_PORT environment variable
+peertube_redis_port: 6379
+
+# Controls the PEERTUBE_REDIS_AUTH environment variable, which is the password to authenticate to Redis/Valkey with.
+# Leave empty if no authentication is required.
+peertube_redis_password: ""
+
 # Controls the PEERTUBE_REDIS_DB environment variable, which selects the Redis/Valkey logical database PeerTube uses.
 peertube_redis_db: 0
 
