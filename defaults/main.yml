@@ -22,8 +22,23 @@ peertube_version: v8.3.0
 peertube_uid: ""
 peertube_gid: ""
 
+# The scheme used for serving PeerTube (`https` or `http`).
+# This describes how users reach PeerTube (e.g. through a reverse-proxy), not how the container listens.
+# See `peertube_environment_variable_webserver_https` and `peertube_environment_variable_webserver_port`.
+peertube_scheme: https
+
 # The hostname at which PeerTube is served.
 peertube_hostname: ""
+
+# Controls the PEERTUBE_WEBSERVER_HTTPS and PEERTUBE_WEBSERVER_PORT environment variables.
+# Together with `peertube_hostname`, these make up PeerTube's public URL, which PeerTube uses to build
+# the links it hands out (e.g. in e-mails and in federation with other instances).
+# Both are derived from `peertube_scheme`. The port only needs adjusting when serving on a non-standard port.
+#
+# Changing PeerTube's public URL for an instance which has already federated is not supported by PeerTube,
+# as other instances will keep referring to it by its old URL.
+peertube_environment_variable_webserver_https: "{{ peertube_scheme == 'https' }}"
+peertube_environment_variable_webserver_port: "{{ 443 if peertube_scheme == 'https' else 80 }}"
 
 # The path at which PeerTube is served.
 # This value must either be `/` or not end with a slash (e.g. `/peertube`).

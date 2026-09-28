@@ -82,6 +82,12 @@
   with_items:
     - peertube_config_smtp_from
 
+- name: Fail if peertube_scheme is invalid
+  ansible.builtin.fail:
+    msg: >-
+      peertube_scheme must be 'https' or 'http'
+  when: "peertube_scheme not in ['https', 'http']"
+
 - name: Fail if PeerTube logging level is invalid
   ansible.builtin.fail:
     msg: >-

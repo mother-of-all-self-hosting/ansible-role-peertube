@@ -36,6 +36,10 @@ peertube_manual_migration_scripts:
 peertube_environment_variables_node_config_forbidden_settings:
   - path: listen.port
     variable: peertube_container_http_port
+  - path: webserver.https
+    variable: peertube_environment_variable_webserver_https
+  - path: webserver.port
+    variable: peertube_environment_variable_webserver_port
   - path: redis.db
     variable: peertube_redis_db
   - path: redis.port
