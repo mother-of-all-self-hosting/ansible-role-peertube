@@ -48,6 +48,14 @@ peertube_environment_variables_node_config_forbidden_settings:
     variable: peertube_environment_variable_video_transcription_model
   - path: video_transcription.timeout
     variable: peertube_environment_variable_video_transcription_timeout
+  - path: open_telemetry.metrics.enabled
+    variable: peertube_environment_variable_open_telemetry_metrics_enabled
+  - path: open_telemetry.metrics.http_request_duration.enabled
+    variable: peertube_environment_variable_open_telemetry_metrics_http_request_duration_enabled
+  - path: open_telemetry.metrics.prometheus_exporter.hostname
+    variable: peertube_environment_variable_open_telemetry_metrics_prometheus_exporter_hostname
+  - path: open_telemetry.metrics.prometheus_exporter.port
+    variable: peertube_environment_variable_open_telemetry_metrics_prometheus_exporter_port
   - path: object_storage.force_path_style
     variable: peertube_config_object_storage_force_path_style
   - path: object_storage.proxy.proxify_private_files

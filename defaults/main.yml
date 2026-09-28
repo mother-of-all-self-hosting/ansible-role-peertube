@@ -450,6 +450,25 @@ peertube_environment_variable_video_transcription_model: small
 # The maximum duration of a single video transcription job.
 peertube_environment_variable_video_transcription_timeout: 6 hours
 
+# Controls the PEERTUBE_OPEN_TELEMETRY_METRICS_ENABLED environment variable.
+# When enabled, PeerTube serves metrics for Prometheus to scrape, via a dedicated HTTP server
+# (see `peertube_environment_variable_open_telemetry_metrics_prometheus_exporter_*`).
+# See: https://docs.joinpeertube.org/maintain/observability
+peertube_environment_variable_open_telemetry_metrics_enabled: false
+
+# Controls the PEERTUBE_OPEN_TELEMETRY_METRICS_HTTP_REQUEST_DURATION_ENABLED environment variable.
+# Enables the HTTP request duration metric, which may have a high cardinality.
+peertube_environment_variable_open_telemetry_metrics_http_request_duration_enabled: false
+
+# Controls the PEERTUBE_OPEN_TELEMETRY_METRICS_PROMETHEUS_EXPORTER_HOSTNAME environment variable.
+# PeerTube's own default (`127.0.0.1`) would make the metrics reachable only from within the container,
+# so we listen on all interfaces instead. This only has an effect when metrics are enabled
+# (see `peertube_environment_variable_open_telemetry_metrics_enabled`).
+peertube_environment_variable_open_telemetry_metrics_prometheus_exporter_hostname: 0.0.0.0
+
+# Controls the PEERTUBE_OPEN_TELEMETRY_METRICS_PROMETHEUS_EXPORTER_PORT environment variable.
+peertube_environment_variable_open_telemetry_metrics_prometheus_exporter_port: 9091
+
 # Specify the timezone
 peertube_environment_variables_tz: UTC
 
