@@ -434,6 +434,22 @@ peertube_config_object_storage_upload_acl_private: private
 # Valid values: debug, info, warn, error
 peertube_config_log_level: info
 
+# Controls the PEERTUBE_VIDEO_TRANSCRIPTION_ENGINE environment variable.
+# The engine used for local video transcription (enabled via the web admin),
+# which PeerTube automatically installs the first time it's needed.
+# Valid values: whisper-ctranslate2, openai-whisper
+peertube_environment_variable_video_transcription_engine: whisper-ctranslate2
+
+# Controls the PEERTUBE_VIDEO_TRANSCRIPTION_MODEL environment variable.
+# The model used for local video transcription, which PeerTube automatically downloads the first time it's needed.
+# Smaller models need less memory and CPU time, at the cost of accuracy.
+# Valid values: tiny, base, small, medium, large-v2, large-v3
+peertube_environment_variable_video_transcription_model: small
+
+# Controls the PEERTUBE_VIDEO_TRANSCRIPTION_TIMEOUT environment variable.
+# The maximum duration of a single video transcription job.
+peertube_environment_variable_video_transcription_timeout: 6 hours
+
 # Specify the timezone
 peertube_environment_variables_tz: UTC
 
