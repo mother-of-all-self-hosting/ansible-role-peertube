@@ -356,6 +356,23 @@ peertube_config_object_storage_endpoint: ""
 # Example: us-east-1
 peertube_config_object_storage_region: ""
 
+# Controls the PEERTUBE_OBJECT_STORAGE_FORCE_PATH_STYLE environment variable.
+# Enable this for S3-compatible services which do not support virtual-hosted-style bucket URLs
+# (e.g. some MinIO, Garage or SeaweedFS setups).
+peertube_config_object_storage_force_path_style: false
+
+# Controls the PEERTUBE_OBJECT_STORAGE_PROXY_PROXIFY_PRIVATE_FILES environment variable.
+# Controls whether PeerTube proxies private files (instead of redirecting to the object storage),
+# which is needed for access control on private/internal videos.
+peertube_config_object_storage_proxy_proxify_private_files: true
+
+# Controls the PEERTUBE_OBJECT_STORAGE_MAX_UPLOAD_PART environment variable.
+# Files bigger than this are uploaded to the object storage in multiple parts.
+peertube_config_object_storage_max_upload_part: 100MB
+
+# Controls the PEERTUBE_OBJECT_STORAGE_MAX_REQUEST_ATTEMPTS environment variable.
+peertube_config_object_storage_max_request_attempts: 3
+
 # Controls the PEERTUBE_OBJECT_STORAGE_CREDENTIALS_ACCESS_KEY_ID environment variable.
 peertube_config_object_storage_credentials_access_key_id: ""
 # Controls the PEERTUBE_OBJECT_STORAGE_CREDENTIALS_SECRET_ACCESS_KEY environment variable.
@@ -368,6 +385,8 @@ peertube_config_object_storage_streaming_playlists_bucket_name: ""
 peertube_config_object_storage_streaming_playlists_prefix: ""
 # Controls the PEERTUBE_OBJECT_STORAGE_STREAMING_PLAYLISTS_BASE_URL environment variable
 peertube_config_object_storage_streaming_playlists_base_url: ""
+# Controls the PEERTUBE_OBJECT_STORAGE_STREAMING_PLAYLISTS_STORE_LIVE_STREAMS environment variable
+peertube_config_object_storage_streaming_playlists_store_live_streams: false
 
 # Controls the PEERTUBE_OBJECT_STORAGE_WEB_VIDEOS_BUCKET_NAME environment variable.
 # Example: webtorrent-videos
@@ -376,6 +395,28 @@ peertube_config_object_storage_web_videos_bucket_name: ""
 peertube_config_object_storage_web_videos_prefix: ""
 # Controls the PEERTUBE_OBJECT_STORAGE_WEB_VIDEOS_BASE_URL environment variable
 peertube_config_object_storage_web_videos_base_url: ""
+
+# Controls the PEERTUBE_OBJECT_STORAGE_ORIGINAL_VIDEO_FILES_BUCKET_NAME environment variable.
+# Only used if PeerTube is configured to keep original video files (`transcoding.original_file.keep`, editable in the web admin).
+peertube_config_object_storage_original_video_files_bucket_name: peertube
+# Controls the PEERTUBE_OBJECT_STORAGE_ORIGINAL_VIDEO_FILES_PREFIX environment variable
+peertube_config_object_storage_original_video_files_prefix: original-video-files/
+# Controls the PEERTUBE_OBJECT_STORAGE_ORIGINAL_VIDEO_FILES_BASE_URL environment variable
+peertube_config_object_storage_original_video_files_base_url: ""
+
+# Controls the PEERTUBE_OBJECT_STORAGE_USER_EXPORTS_BUCKET_NAME environment variable.
+peertube_config_object_storage_user_exports_bucket_name: peertube
+# Controls the PEERTUBE_OBJECT_STORAGE_USER_EXPORTS_PREFIX environment variable
+peertube_config_object_storage_user_exports_prefix: user-exports/
+# Controls the PEERTUBE_OBJECT_STORAGE_USER_EXPORTS_BASE_URL environment variable
+peertube_config_object_storage_user_exports_base_url: ""
+
+# Controls the PEERTUBE_OBJECT_STORAGE_CAPTIONS_BUCKET_NAME environment variable.
+peertube_config_object_storage_captions_bucket_name: peertube
+# Controls the PEERTUBE_OBJECT_STORAGE_CAPTIONS_PREFIX environment variable
+peertube_config_object_storage_captions_prefix: captions/
+# Controls the PEERTUBE_OBJECT_STORAGE_CAPTIONS_BASE_URL environment variable
+peertube_config_object_storage_captions_base_url: ""
 
 # Controls the PEERTUBE_OBJECT_STORAGE_UPLOAD_ACL_PUBLIC environment variable
 peertube_config_object_storage_upload_acl_public: public-read

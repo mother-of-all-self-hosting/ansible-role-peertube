@@ -34,3 +34,31 @@ peertube_environment_variables_node_config_forbidden_settings:
     variable: peertube_container_http_port
   - path: redis.db
     variable: peertube_redis_db
+  - path: object_storage.force_path_style
+    variable: peertube_config_object_storage_force_path_style
+  - path: object_storage.proxy.proxify_private_files
+    variable: peertube_config_object_storage_proxy_proxify_private_files
+  - path: object_storage.max_upload_part
+    variable: peertube_config_object_storage_max_upload_part
+  - path: object_storage.max_request_attempts
+    variable: peertube_config_object_storage_max_request_attempts
+  - path: object_storage.streaming_playlists.store_live_streams
+    variable: peertube_config_object_storage_streaming_playlists_store_live_streams
+  - path: object_storage.original_video_files.bucket_name
+    variable: peertube_config_object_storage_original_video_files_bucket_name
+  - path: object_storage.original_video_files.prefix
+    variable: peertube_config_object_storage_original_video_files_prefix
+  - path: object_storage.original_video_files.base_url
+    variable: peertube_config_object_storage_original_video_files_base_url
+  - path: object_storage.user_exports.bucket_name
+    variable: peertube_config_object_storage_user_exports_bucket_name
+  - path: object_storage.user_exports.prefix
+    variable: peertube_config_object_storage_user_exports_prefix
+  - path: object_storage.user_exports.base_url
+    variable: peertube_config_object_storage_user_exports_base_url
+  - path: object_storage.captions.bucket_name
+    variable: peertube_config_object_storage_captions_bucket_name
+  - path: object_storage.captions.prefix
+    variable: peertube_config_object_storage_captions_prefix
+  - path: object_storage.captions.base_url
+    variable: peertube_config_object_storage_captions_base_url

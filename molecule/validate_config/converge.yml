@@ -27,6 +27,9 @@
       - name: controlled setting explicitly set to null
         node_config: {redis: {db: null}}
         expected_failure_variable: peertube_redis_db
+      - name: deeply nested controlled setting
+        node_config: {object_storage: {proxy: {proxify_private_files: false}}}
+        expected_failure_variable: peertube_config_object_storage_proxy_proxify_private_files
   tasks:
     - name: Run the configuration validation cases
       ansible.builtin.include_tasks: tasks/validate_config_case.yml
