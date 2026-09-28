@@ -116,6 +116,23 @@ peertube_container_labels_traefik_additional_response_headers_auto: |
   }}
 peertube_container_labels_traefik_additional_response_headers_custom: {}
 
+# Controls if labels are added to expose PeerTube's Prometheus metrics publicly (at `peertube_container_labels_traefik_metrics_path_prefix`).
+# Requires metrics to be enabled (see `peertube_environment_variable_open_telemetry_metrics_enabled`).
+peertube_container_labels_traefik_metrics_enabled: false
+peertube_container_labels_traefik_metrics_hostname: "{{ peertube_container_labels_traefik_hostname }}"
+# The path prefix must either be `/` or not end with a slash (e.g. `/metrics`).
+peertube_container_labels_traefik_metrics_path_prefix: /metrics
+peertube_container_labels_traefik_metrics_rule: "Host(`{{ peertube_container_labels_traefik_metrics_hostname }}`){% if peertube_container_labels_traefik_metrics_path_prefix != '/' %} && PathPrefix(`{{ peertube_container_labels_traefik_metrics_path_prefix }}`){% endif %}"
+peertube_container_labels_traefik_metrics_priority: 0
+peertube_container_labels_traefik_metrics_entrypoints: "{{ peertube_container_labels_traefik_entrypoints }}"
+peertube_container_labels_traefik_metrics_middlewares: []
+peertube_container_labels_traefik_metrics_tls: "{{ peertube_container_labels_traefik_metrics_entrypoints != 'web' }}"
+peertube_container_labels_traefik_metrics_tls_certResolver: "{{ peertube_container_labels_traefik_tls_certResolver }}"  # noqa var-naming
+# Controls whether HTTP Basic authentication protects the metrics.
+peertube_container_labels_traefik_metrics_middleware_basic_auth_enabled: false
+# Uses the htpasswd format (e.g. generated via `htpasswd -nb USERNAME PASSWORD`). Multiple users can be separated by commas.
+peertube_container_labels_traefik_metrics_middleware_basic_auth_users: ""
+
 # peertube_container_labels_additional_labels contains a multiline string with additional labels to add to the container label file.
 # See `../templates/labels.j2` for details.
 # To add your own custom labels, use `peertube_container_labels_additional_labels_custom`
