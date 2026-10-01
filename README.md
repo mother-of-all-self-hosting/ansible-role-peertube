@@ -28,13 +28,9 @@ Version bumps are never automerged here: PeerTube runs its database migrations u
 
 ## Releases
 
-Tags are cut automatically by [`.github/workflows/autotag.yml`](.github/workflows/autotag.yml), from the state of the repository rather than from commit messages. [`bin/compute-next-tag.sh`](bin/compute-next-tag.sh) reads `peertube_version` out of [`defaults/main.yml`](defaults/main.yml) and the tags that already exist:
+Tags are created on the GitHub workflow by [`.github/workflows/autotag.yml`](.github/workflows/autotag.yml), which asks [`bin/compute-next-tag.sh`](bin/compute-next-tag.sh) what the commit on `main` should be released as. The answer comes from the version pinned in [`defaults/main.yml`](defaults/main.yml) and from the tags that already exist, so a commit that only touches documentation or CI is not released at all, and any change to the role itself is — without waiting for a dependency bump to carry it along.
 
-- a PeerTube version that has never been released starts the release counter at 0 (`v7.3.0-0`)
-- any other change under `defaults/`, `meta/`, `tasks/`, `templates/` or `vars/` increments it (`v7.3.0-1`)
-- changes that do not affect what a playbook run does (README, CI configuration, Molecule tests) release nothing
-
-[`bin/test-compute-next-tag.sh`](bin/test-compute-next-tag.sh) exercises that against throwaway repositories, and runs as a prek hook whenever those scripts or `defaults/main.yml` change.
+[`bin/test-compute-next-tag.sh`](bin/test-compute-next-tag.sh) exercises that script against throwaway repositories, and runs as a prek hook.
 
 ## Development
 
