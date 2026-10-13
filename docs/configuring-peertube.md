@@ -126,15 +126,16 @@ Make sure to replace the placeholders with your own values.
 You also need to specify administrator's account details by adding the following configuration to your `vars.yml` file:
 
 ```yaml
-peertube_environment_variable_superuser_name: ADMIN_USERNAME_HERE
-peertube_environment_variable_superuser_email: ADMIN_EMAIL_ADDRESS_HERE
-peertube_environment_variable_superuser_password: ADMIN_PASSWORD_HERE
+peertube_config_admin_email: ADMIN_EMAIL_ADDRESS_HERE
+peertube_config_root_user_initial_password: ADMIN_PASSWORD_HERE
 ```
 
-Generating a strong password (e.g. `pwgen -s 64 1`) is recommended for `peertube_environment_variable_superuser_password`.
+Generating a strong password (e.g. `pwgen -s 64 1`) is recommended for `peertube_config_root_user_initial_password`.
 
 >[!NOTE]
-> Subsequent changes to them will not affect the existing user.
+>
+> - The administrator's username is `root`.
+> - Subsequent changes to them will not affect the existing user.
 
 ### Extending the configuration
 
@@ -158,7 +159,10 @@ If you use the MASH playbook, the shortcut commands with the [`just` program](ht
 
 After running the command for installation, PeerTube becomes available at the specified hostname like `https://example.com`.
 
-To get started, open the URL with a web browser to log in to the instance. You can log in with the username (not email address) and password specified with the `peertube_environment_variable_superuser_*` variables.
+To get started, open the URL with a web browser to log in to the instance. You should then be able to log in with:
+
+- username: `root`
+- password: the password you've set in `peertube_config_root_user_initial_password` in `vars.yml`
 
 ## Troubleshooting
 
