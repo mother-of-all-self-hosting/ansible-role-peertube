@@ -69,7 +69,7 @@ After adjusting the hostname, make sure to adjust your DNS records to point the 
 You also need to set a random string to the variable as below by adding the following configuration to your `vars.yml` file. The value can be generated with `pwgen -s 64 1` or in another way.
 
 ```yaml
-peertube_environment_variable_secret_key: YOUR_SECRET_KEY_HERE
+peertube_config_secret: YOUR_SECRET_KEY_HERE
 ```
 
 ### Set variables for the database server
