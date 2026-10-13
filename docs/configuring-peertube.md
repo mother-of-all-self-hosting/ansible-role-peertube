@@ -72,19 +72,39 @@ You also need to set a random string to the variable as below by adding the foll
 peertube_config_secret: YOUR_SECRET_KEY_HERE
 ```
 
-### Set variables for the database server
+### Configuring database
+
+#### Set variables for the database server
 
 To have the PeerTube instance connect to your Postgres server, add the following configuration to your `vars.yml` file.
 
 ```yaml
-peertube_database_hostname: YOUR_POSTGRES_SERVER_HOSTNAME_HERE
-peertube_database_port: 5432
 peertube_database_username: YOUR_POSTGRES_SERVER_USERNAME_HERE
 peertube_database_password: YOUR_POSTGRES_SERVER_PASSWORD_HERE
 peertube_database_name: YOUR_POSTGRES_SERVER_DATABASE_NAME_HERE
 ```
 
 Make sure to replace the placeholders with your own values.
+
+#### Configuring connection to the database server (optional)
+
+By default the role is configured to establish TCP connection with the Postgres server, and you need to add the following configuration to your `vars.yml` file:
+
+```yaml
+peertube_database_hostname: YOUR_POSTGRES_SERVER_HOSTNAME_HERE
+```
+
+Make sure to replace the placeholders with your own values.
+
+If connection via the Unix socket is preferred, you can mount the Unix socket by adding the following configuration to your `vars.yml` file:
+
+```yaml
+# Enable the connection to Postgres server via a Unix socket
+peertube_database_socket_enabled: true
+
+# Specify the path to the Postgres Unix socket path on the host (bind-mount source)
+peertube_database_socket_path_host: ""
+```
 
 ### Configure a Redis database
 
