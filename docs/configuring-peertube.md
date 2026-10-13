@@ -137,6 +137,12 @@ Generating a strong password (e.g. `pwgen -s 64 1`) is recommended for `peertube
 > - The administrator's username is `root`.
 > - Subsequent changes to them will not affect the existing user.
 
+### Integrating with Prometheus (optional)
+
+PeerTube can natively expose metrics to Prometheus.
+
+If you are looking for an integration, you can check out the MASH playbook. Refer to [this section of the documentation on the playbook](https://github.com/mother-of-all-self-hosting/mash-playbook/blob/main/docs/services/peertube.md#integrating-with-prometheus-optional) for more information.
+
 ### Extending the configuration
 
 There are some additional things you may wish to configure about the service.
