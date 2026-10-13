@@ -18,14 +18,6 @@ Check [`defaults/main.yml`](defaults/main.yml) for the full list of supported op
 
 💡 For an Ansible playbook which integrates this role and makes it easier to use, see the [Mother-of-All-Self-Hosting Ansible playbook](https://github.com/mother-of-all-self-hosting/mash-playbook).
 
-## Upgrading PeerTube
-
-`peertube_version` names a PeerTube release (`v8.3.0`), which is also the container image tag (see `peertube_container_image_tag`). Since 8.0.0, PeerTube publishes plain version tags; the Debian-flavoured ones (`v8.3.0-trixie`) are deprecated upstream, and Renovate (see [`.github/renovate.json`](.github/renovate.json)) ignores them.
-
-Some PeerTube releases require a migration script to be run by hand once PeerTube has finished its own database migrations (see the *IMPORTANT NOTES* in PeerTube's [CHANGELOG](https://github.com/Chocobozzz/PeerTube/blob/develop/CHANGELOG.md)). When upgrading an existing installation, this role runs these automatically. The scripts it knows about are listed in `peertube_manual_migration_scripts` (in [`vars/main.yml`](vars/main.yml)), which needs to be extended whenever a new PeerTube release introduces one.
-
-Version bumps are never automerged here: PeerTube runs its database migrations unattended on startup, and its patch releases do carry them.
-
 ## Development
 
 ### pre-commit

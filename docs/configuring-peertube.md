@@ -196,3 +196,7 @@ If you want to increase the verbosity, add the following configuration to your `
 ```yaml
 peertube_config_log_level: debug
 ```
+
+### Upgrading PeerTube
+
+Some PeerTube releases require a migration script to be run by hand once PeerTube has finished its own database migrations (see the *IMPORTANT NOTES* in PeerTube's [CHANGELOG](https://github.com/Chocobozzz/PeerTube/blob/develop/CHANGELOG.md)). When upgrading an existing installation, this role runs these automatically. The scripts it knows about are listed in `peertube_manual_migration_scripts` (in [`vars/main.yml`](vars/main.yml)), which needs to be extended whenever a new PeerTube release introduces one.
