@@ -175,3 +175,11 @@ To get started, open the URL with a web browser to log in to the instance. You s
 ### Check the service's logs
 
 You can find the logs in [systemd-journald](https://www.freedesktop.org/software/systemd/man/systemd-journald.service.html) by logging in to the server with SSH and running `journalctl -fu peertube` (or how you/your playbook named the service, e.g. `mash-peertube`).
+
+#### Increase logging verbosity
+
+If you want to increase the verbosity, add the following configuration to your `vars.yml` file:
+
+```yaml
+peertube_config_log_level: debug
+```
