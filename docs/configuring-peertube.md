@@ -13,6 +13,7 @@ SPDX-FileCopyrightText: 2023 Felix Stupp
 SPDX-FileCopyrightText: 2023 Julian-Samuel Gebühr
 SPDX-FileCopyrightText: 2023 Pierre 'McFly' Marty
 SPDX-FileCopyrightText: 2024 Thomas Miceli
+SPDX-FileCopyrightText: 2024 Tiz
 SPDX-FileCopyrightText: 2024-2026 Suguru Hirahara
 
 SPDX-License-Identifier: AGPL-3.0-or-later
@@ -20,11 +21,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 # Setting up PeerTube
 
-This is an [Ansible](https://www.ansible.com/) role which installs [PeerTube](https://docs.peertube.dev/en/stable/) to run as a [Docker](https://www.docker.com/) container wrapped in a systemd service.
+This is an [Ansible](https://www.ansible.com/) role which installs [PeerTube](https://joinpeertube.org/) to run as a [Docker](https://www.docker.com/) container wrapped in a systemd service.
 
-PeerTube is an open-source web application that provides [IP address management (IPAM)](https://en.wikipedia.org/wiki/IP_address_management) and [data center infrastructure management (DCIM)](https://en.wikipedia.org/wiki/Data_center_management#Data_center_infrastructure_management) functionality.
+PeerTube is an ActivityPub federated video platform developed by [Framasoft](https://framasoft.org/), a french non-profit.
 
-See the project's [documentation](https://docs.peertube.dev/en/stable/) to learn what PeerTube does and why it might be useful to you.
+See the project's [documentation](https://docs.joinpeertube.org/) to learn what PeerTube does and why it might be useful to you.
 
 ## Prerequisites
 
@@ -160,6 +161,18 @@ ansible-playbook -i inventory/hosts setup.yml --tags=setup-all,start
 ```
 
 If you use the MASH playbook, the shortcut commands with the [`just` program](https://github.com/mother-of-all-self-hosting/mash-playbook/blob/main/docs/just.md) are also available: `just install-all` or `just setup-all`
+
+### Adjust Traefik network's IP address range
+
+After completing the initial installation, it is necessary to adjust the Traefik network's IP address range.
+
+First, find the `traefik` network's IP address range by running the following command on the server: `docker network inspect traefik -f "{{ (index .IPAM.Config 0).Subnet }}"`
+
+Then, add the following configuration after replacing the example IP range below, and re-run the playbook.
+
+```yaml
+peertube_trusted_proxies_values_custom: ["172.21.0.0/16"]
+```
 
 ## Usage
 
